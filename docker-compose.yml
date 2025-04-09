@@ -1,0 +1,57 @@
+services:
+  # Frontend service
+  frontend:
+    build:
+      context: ./app/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Expose port 3000 for the React app
+    environment:
+      - NODE_ENV=production
+      # TODO: Add additional environment variables (e.g., API endpoints) from .env file
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Backend service
+  backend:
+    build:
+      context: ./app/backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Expose port 8000 for FastAPI
+    environment:
+      - ENVIRONMENT=production
+      # TODO: Inject secure sensitive values from the .env (e.g., DATABASE_URL, SECRET_KEY)
+    depends_on:
+      - model
+    restart: unless-stopped
+
+  # Model service for ML predictions
+  model:
+    build:
+      context: ./model
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Expose port 5000 for model inference
+    environment:
+      - ENVIRONMENT=production
+      # TODO: Insert additional model-specific variables
+    restart: unless-stopped
+
+  # Optional Supabase (or any external data/auth service)
+  supabase:
+    image: supabase/supabase:latest
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      # TODO: Add any additional Supabase configuration variables as required
+    ports:
+      - "5432:5432"
+      - "8001:8000"  # Change as needed if running separately from backend
+    volumes:
+      - supabase_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  supabase_data:
