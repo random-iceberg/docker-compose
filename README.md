@@ -12,7 +12,6 @@ This repository provides a centralized [Docker Compose](https://docs.docker.com/
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Environment Setup](#environment-setup)
 - [Running the Application](#running-the-application)
 - [Updating and Maintenance](#updating-and-maintenance)
 - [Troubleshooting](#troubleshooting)
@@ -21,25 +20,14 @@ This repository provides a centralized [Docker Compose](https://docs.docker.com/
 
 - [Docker](https://docs.docker.com/get-docker/) installed on your system.
 - [Docker Compose](https://docs.docker.com/compose/install/) available.
-- A properly configured `.env` file with all necessary environment variables (do not commit sensitive information).
 
-## Environment Setup
+## Basic Setup
 
 1. **Clone the Repository**:  
    ```bash
    git clone https://your.git.repo/docker-compose.git
    cd docker-compose
    ```
-
-2. **Create and Configure `.env` File**:  
-   Use the provided `.env.example` as a starting point:
-   ```bash
-   cp .env.example .env
-   ```
-   Then, update the following variables:
-   - `POSTGRES_PASSWORD`
-   - `JWT_SECRET`
-   - Additional API keys and secrets for your services
 
 ## Running the Application
 
