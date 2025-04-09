@@ -14,11 +14,11 @@ PARTIAL_READ_EXTENSIONS = {'.csv', '.jsonl', '.txt', '.log'}
 
 # Default filenames to ignore
 EXPLICIT_IGNORE_FILES = {
-    'LICENSE', 
-    'output.json', 
-    'CHANGELOG.md', 
-    '.dockerignore', 
-    '.gitignore', 
+    'LICENSE',
+    'output.json',
+    'CHANGELOG.md',
+    '.dockerignore',
+    '.gitignore',
     'package-lock.json'
 }
 
@@ -49,6 +49,7 @@ def read_partial_file(file_path, first_n=10, last_m=5):
     """
     Reads the first 'first_n' lines and the last 'last_m' lines of a file.
     Inserts '...' in between if the file has more than 'first_n' lines.
+    Replaces all occurrences of '`' with '~' in each line.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -57,7 +58,8 @@ def read_partial_file(file_path, first_n=10, last_m=5):
             total_lines = 0
             for line in file:
                 total_lines += 1
-                safe_line = line.rstrip('\n').replace('~', '~')
+                # Replace backticks with tildes
+                safe_line = line.rstrip('\n').replace('`', '~')
                 if total_lines <= first_n:
                     first_lines.append(safe_line)
                 last_lines.append(safe_line)
@@ -74,6 +76,7 @@ def read_file(file_path):
     """
     Reads a file and returns its content.
     Uses partial content for specific extensions and returns '...' for image files.
+    Replaces all occurrences of '`' with '~' in the file content.
     """
     try:
         mime_type, _ = mimetypes.guess_type(file_path)
@@ -86,7 +89,7 @@ def read_file(file_path):
         
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-            return content.replace('~', '~')
+            return content.replace('`', '~')
     except (UnicodeDecodeError, FileNotFoundError):
         return "..."
 
