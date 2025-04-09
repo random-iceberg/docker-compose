@@ -2,12 +2,12 @@
 
 ![team/random_iceberg banner](./docs/random_iceberg.png)
 
-This repository provides a centralized [Docker Compose](https://docs.docker.com/compose/) configuration to orchestrate the major services of the Titanic Survivor Prediction Application. The setup includes:
+This repository provides a centralized Docker Compose configuration to orchestrate the major services of the Titanic Survivor Prediction Application. The architecture consists of:
 
 - **Frontend**: A React-based Single Page Application.
-- **Backend**: A FastAPI server handling business logic and API endpoints.
-- **Model Service**: A microservice dedicated to machine learning model inference.
-- **Supabase**: A self-hosted service for authentication and data storage.
+- **Backend**: A FastAPI server managing business logic and API endpoints.
+- **Model Service**: A dedicated microservice for machine learning model inference.
+- **Supabase**: A self-hosted service for user authentication and data storage.
 
 ## Table of Contents
 
@@ -18,68 +18,62 @@ This repository provides a centralized [Docker Compose](https://docs.docker.com/
 
 ## Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) installed on your system.
-- [Docker Compose](https://docs.docker.com/compose/install/) available.
-
-## Basic Setup
-
-1. **Clone the Repository**:  
-   ```bash
-   git clone https://your.git.repo/docker-compose.git
-   cd docker-compose
-   ```
+- [Docker](https://docs.docker.com/get-docker/) must be installed.
+- [Docker Compose](https://docs.docker.com/compose/install/) must be available.
 
 ## Running the Application
 
 To build and start all services, run:
+
 ```bash
 docker-compose up --build -d
 ```
+
 This command will:
-- Build the Docker images for **frontend**, **backend**, and **model** services.
-- Pull the latest image for Supabase if not already available.
-- Create and attach the necessary volumes for persistent storage.
+- Build Docker images for **frontend**, **backend**, and **model**.
+- Pull the latest image for Supabase if unavailable.
+- Create and attach the necessary volumes for persistent data storage.
 
 ## Updating and Maintenance
 
 - **Updating Services**:  
-  Pull the latest changes in each submodule (frontend, backend, model) and rebuild images using:
+  Update each submodule (frontend, backend, model) and rebuild using:
   ```bash
   docker-compose pull
   docker-compose up --build -d
   ```
 
 - **Restarting Services**:  
-  To apply configuration changes:
+  To apply configuration changes, run:
   ```bash
   docker-compose down
   docker-compose up -d
   ```
 
 - **Scaling**:  
-  For horizontal scaling, adjust the service definitions and use Docker Compose’s scaling feature:
+  For horizontal scaling, adjust service definitions as needed. For example, to scale the backend:
   ```bash
   docker-compose up --scale backend=3 -d
   ```
 
 ## Troubleshooting
 
-- **Logs**:  
-  View logs for a specific service:
+- **Viewing Logs**:  
+  To view logs for a specific service:
   ```bash
-  docker-compose logs backend
+  docker-compose logs [service_name]
   ```
-- **Service Health**:  
-  Check the status of the services:
+
+- **Checking Service Health**:  
+  Verify the status of all containers with:
   ```bash
   docker-compose ps
   ```
+
 - **Resetting Data**:  
-  To remove volumes and reset the database:
+  To remove volumes and reset the environment:
   ```bash
   docker-compose down -v
   ```
 
----
-
-> **Note:** This configuration is a draft. Further enhancements may be needed to meet production requirements, including stricter security configurations, resource limits, and more robust monitoring.
+> **Note:** This configuration is designed as a starting point. Further enhancements (such as advanced security configurations, resource limits, and monitoring) may be required for production deployments.
