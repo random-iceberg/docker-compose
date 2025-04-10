@@ -1,33 +1,35 @@
 services:
-  # Frontend service
+  # Frontend service (React)
   frontend:
     build:
       context: ./app/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Expose port 3000 for the React app
+      - "3000:3000"  # Expose port 3000 for the React SPA
     environment:
       - NODE_ENV=production
-      # TODO: Add additional environment variables (e.g., API endpoints) from .env file
+      # TODO: Adjust any API endpoint URLs if required
     depends_on:
       - backend
     restart: unless-stopped
 
-  # Backend service
+  # Backend service (FastAPI)
   backend:
     build:
       context: ./app/backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"  # Expose port 8000 for FastAPI
+      - "8000:8000"  # Expose port 8000 for the FastAPI service
     environment:
       - ENVIRONMENT=production
-      # TODO: Inject secure sensitive values from the .env (e.g., DATABASE_URL, SECRET_KEY)
+      - DATABASE_URL=postgres://postgres@supabase:5432/postgres
+      - SECRET_KEY=changeme_in_production
+      # Additional inline configuration can be added here as needed
     depends_on:
       - model
     restart: unless-stopped
 
-  # Model service for ML predictions
+  # Model service (ML predictions microservice)
   model:
     build:
       context: ./model
@@ -36,19 +38,30 @@ services:
       - "5000:5000"  # Expose port 5000 for model inference
     environment:
       - ENVIRONMENT=production
-      # TODO: Insert additional model-specific variables
+      # Additional model-specific configuration can be inserted here
     restart: unless-stopped
 
-  # Optional Supabase (or any external data/auth service)
+  # Supabase service (Postgres, GoTrue, Supavisor, etc.)
   supabase:
     image: supabase/supabase:latest
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - JWT_SECRET=${JWT_SECRET}
-      # TODO: Add any additional Supabase configuration variables as required
     ports:
-      - "5432:5432"
-      - "8001:8000"  # Change as needed if running separately from backend
+      - "5432:5432"  # Database access (Postgres)
+      - "8001:8000"  # Optionally expose Supabase Studio or API gateway on a custom port if needed
+    environment:
+      # Hard-coded default credentials for demo purposes; do not use in production
+      - POSTGRES_PASSWORD=supabasepassword
+      - JWT_SECRET=changeme_supabase_secret
+      - SITE_URL=http://localhost
+      - DASHBOARD_USERNAME=admin
+      - DASHBOARD_PASSWORD=admin123
+      - POOLER_TENANT_ID=default-tenant
+      # Uncomment and fill in additional config as needed
+      # - SMTP_ADMIN_EMAIL=admin@example.com
+      # - SMTP_HOST=smtp.example.com
+      # - SMTP_PORT=587
+      # - SMTP_USER=smtpuser
+      # - SMTP_PASS=smtppass
+      # - SMTP_SENDER_NAME=SupabaseDemo
     volumes:
       - supabase_data:/var/lib/postgresql/data
     restart: unless-stopped
