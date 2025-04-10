@@ -9,6 +9,43 @@ This repository provides a centralized Docker Compose configuration to orchestra
 - **Model Service**: A dedicated microservice for machine learning model inference.
 - **Supabase**: A self-hosted service for user authentication and data storage.
 
+## Project Directory Structure
+
+The project follows a modular structure to ensure maintainability and scalability. Below is a high-level layout of the repository:
+
+```
+docker-compose/
+├── CONTRIBUTING.md          # Guidelines for contributing and commit message conventions
+├── dir_to_json.py           # Utility to convert the directory structure to JSON
+├── docker-compose.yml       # Orchestrates all services (frontend, backend, model, supabase)
+├── README.md
+├── docs/                    # Documentation and Project Charter submodule
+│   ├── home.md
+│   ├── Project-Charter.md
+│   └── random_iceberg.png
+├── app/                     # Application code for web services
+│   ├── backend/             # FastAPI backend service
+│   │   ├── README.md
+│   │   ├── main.py
+│   │   ├── requirements.txt
+│   │   ├── routers/         # API route definitions
+│   │   ├── models/          # Data models and schemas
+│   │   ├── services/        # Business logic and integration layers
+│   │   └── tests/           # Unit and integration tests
+│   └── frontend/
+│       ├── README.md
+│       ├── package.json
+│       ├── src/             # Source files: components, assets, etc.
+│       └── public/          # Public assets and HTML templates
+└── model/
+    ├── README.md
+    ├── main.py
+    ├── requirements.txt
+    ├── training/            # Scripts and configuration for model training
+    ├── inference/           # Inference logic and endpoints
+    └── tests/               # Tests for model training and inference
+```
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
