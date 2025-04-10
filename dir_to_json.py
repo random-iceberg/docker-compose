@@ -25,7 +25,10 @@ EXPLICIT_IGNORE_FILES = {
 # Folders (and file names) to ignore entirely
 EXPLICIT_IGNORE_FOLDERS = {
     '.git',
-    '.gitlab'
+    '.gitlab',
+    'node_modules',
+    '.venv',
+    '__pycache__',
 }
 
 def parse_ignore_file(ignore_file_path):

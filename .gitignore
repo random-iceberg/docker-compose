@@ -1,1 +1,3 @@
-output.json
+**/output.json
+.venv
+__pycache__/
