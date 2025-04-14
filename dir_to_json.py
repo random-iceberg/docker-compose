@@ -19,7 +19,11 @@ EXPLICIT_IGNORE_FILES = {
     'CHANGELOG.md',
     '.dockerignore',
     '.gitignore',
-    'package-lock.json'
+    # 'Sprint-1.md',
+    # 'Sprint-2.md',
+    # 'Sprint-3.md',
+    # 'Sprint-4.md',
+    'package-lock.json',
 }
 
 # Folders (and file names) to ignore entirely

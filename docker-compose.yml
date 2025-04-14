@@ -5,12 +5,9 @@ services:
       context: ./app/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Expose port 3000 for the React SPA
+      - "3000:80"
     environment:
       - NODE_ENV=production
-      # TODO: Adjust any API endpoint URLs if required
-    depends_on:
-      - backend
     restart: unless-stopped
 
   # Backend service (FastAPI)

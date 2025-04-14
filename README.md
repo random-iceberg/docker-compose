@@ -58,6 +58,10 @@ docker-compose/
 - [Docker](https://docs.docker.com/get-docker/) must be installed.
 - [Docker Compose](https://docs.docker.com/compose/install/) must be available.
 
+## Getting Started
+
+<!-- TODO -->
+
 ## Running the Application
 
 To build and start all services, run:
