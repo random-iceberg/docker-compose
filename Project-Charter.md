@@ -241,7 +241,6 @@ To ensure rapid iteration, continuous integration, and prompt feedback, the proj
 
 - **Sprint 1 (Weeks 1-2): Core Codebase Integration**
   - **Backend & ML API Core Development:**  
-    - Finalize the FastAPI skeleton with core endpoints (e.g., `/health`, `/predict/`).
     - Develop dummy ML inference and training endpoints within the Model API using placeholder logic.
     - Define and implement core Pydantic schemas for prediction and training data.
   - **Database & Configuration:**  
