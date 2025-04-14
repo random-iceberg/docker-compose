@@ -224,43 +224,67 @@ architecture-beta
 
 ## 6. Project Timeline and Sprint Structure
 
-To ensure rapid iteration, continuous integration, and prompt feedback, the project will be executed in **four sprints**, each spanning **2 weeks**. This shortened sprint duration (compared to a traditional 3-week cycle) is adopted to enable faster identification of issues, more frequent stakeholder reviews, and agile responsiveness to evolving requirements. The structure supports iterative development and minimizes risk by delivering incremental functionality.
+To ensure rapid iteration, continuous integration, and prompt feedback, the project will be executed in **four sprints**, each spanning **2 weeks**. With a team of four dedicated full-stack developers and two dedicated Backend & Model Specialists (Emily Johnson and David Williams), our early efforts concentrate on delivering a production-ready core codebase that integrates the complete functionality skeleton: the frontend, backend (including the Model API), and the Supabase database. Core logic and configuration across all pages and endpoints are built during Sprint 1, while authentication and advanced user management are refined in Sprints 2 and 3.
 
 ### Milestones and Deliverables
 
-| **Milestone**                          | **Deliverable**                                                                                                                                                    | **Deadline**   |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |
-| **Project Inception (Sprint 1 Start)** | Finalized requirements, initial architecture design, and basic project skeleton setup (React SPA & FastAPI backend, basic Supabase integration).                   | End of Week 2  |
-| **Sprint 1 Review**                    | Completion of the initial landing page, user registration/login module, and basic Docker Compose configuration.                                                    | End of Week 4  |
-| **Sprint 2 Review**                    | Integration of primary ML models (Random Forest, SVM) into the Model Backend, enhanced API endpoints, and advanced user authentication features.                   | End of Week 6  |
-| **Sprint 3 Review**                    | Implementation of comprehensive survival calculator functionalities, real-time prediction updates, and partial E2E testing with Cypress/Playwright.                | End of Week 8  |
-| **Sprint 4 & Final Demo**              | Full feature completion including admin console capabilities, complete E2E test coverage, finalized CI/CD pipelines, and polished marketing & presentation assets. | End of Week 10 |
-| **Project Submission**                 | Final ZIP archive containing source code, documentation, GitLab repositories, and presentation slides; all components passing automated tests.                     | End of Week 12 |
+| **Milestone**                          | **Deliverable**                                                                                                                                                                                                                                                                                                                                                                                                                 | **Deadline**   |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| **Project Inception (Sprint 1 Start)** | With preliminary setup already in place (repository initialization and container orchestration), Sprint 1 will deliver the integrated core codebase: <ul><li>Complete implementation of the core ML model logic in the FastAPI backend and Model API,</li><li>Full integration of Supabase with the initial database schema (authentication tables, user data, and session management),</li><li>Integration of core configuration across all services, including environment variable setup and CI/CD configurations,</li><li>A fully bootstrapped React SPA that includes essential pages (landing page, dashboard, and placeholder pages for future routes) with basic routing and component hierarchy.</li></ul> | End of Week 2  |
+| **Sprint 1 Review**                    | The core system is fully integrated and functionally operative: <ul><li>All services (frontend, backend, model, and Supabase) launch successfully with proper inter-service communication,</li><li>The FastAPI backend exposes core endpoints (e.g., `/health`, `/predict/`) and the Model API provides dummy responses,</li><li>Database connectivity via Supabase is validated and the base schema is complete,</li><li>The React SPA renders the landing page and dashboard with integrated routing and placeholder content.</li></ul>                            | End of Week 4  |
+| **Sprint 2 Review**                    | Building on the core system, Sprint 2 focuses on initiating authentication and refining the APIs: <ul><li>Begin integration of secure authentication workflows and basic user management (registration, login, secure session handling) without disrupting core functionality,</li><li>Enhance backend endpoints with robust error handling, logging, and data validation,</li><li>Improve frontend interactivity by connecting UI components (such as status indicators and dynamic data displays) to the backend,</li><li>Expand unit and integration tests to cover newly added authentication and validation logic.</li></ul>                                      | End of Week 6  |
+| **Sprint 3 Review**                    | Sprint 3 is dedicated to advanced feature enhancements and performance optimization: <ul><li>Refine and complete authentication and user management workflows, including user role definitions and secure session management,</li><li>Optimize ML model training routines and inference pipelines with advanced logging and error management,</li><li>Add micro-interactions and handle edge-case scenarios across services,</li><li>Initiate comprehensive end-to-end (E2E) testing using Cypress/Playwright to validate overall system integration.</li></ul>            | End of Week 8  |
+| **Sprint 4 & Final Demo**              | The final sprint focuses on production hardening and overall quality assurance: <ul><li>Implement the admin console for comprehensive model management (listing, training, deletion),</li><li>Achieve complete E2E test coverage and finalize CI/CD pipelines,</li><li>Polish the user interface, marketing materials, and presentation assets based on stakeholder feedback,</li><li>Conduct final QA cycles and obtain stakeholder sign-off on all features.</li></ul>                                                     | End of Week 10 |
+| **Project Submission**                 | Deliver a final comprehensive ZIP archive containing all source code, documentation, GitLab repositories, and presentation slides. All components must pass automated tests and meet production-quality standards.                                                                                                                                                                                                                | End of Week 12 |
 
 ### Detailed Sprint Breakdown
 
-- **Sprint 1 (Weeks 1-2):**
-  - Establish core architecture and project setup.
-  - Develop initial frontend prototype using React + TypeScript.
-  - Create FastAPI boilerplate for the Web Backend.
-  - Configure Supabase for user authentication and data storage.
-  - Set up the basic Docker Compose environment and GitLab CI pipeline.
-- **Sprint 2 (Weeks 3-4):**
-  - Integrate and test ML models (Random Forest and SVM) in the Model Backend.
-  - Implement extended user authentication features.
-  - Expand RESTful API endpoints for real-time prediction requests.
-  - Enhance Docker Compose orchestration to support additional services.
-- **Sprint 3 (Weeks 5-6):**
-  - Develop the comprehensive survival calculator with real-time input processing.
-  - Implement dynamic prediction updates and reset functionality.
-  - Begin partial end-to-end (E2E) testing using Cypress/Playwright.
-  - Optimize model training routines and integrate detailed logging and progress indicators.
-- **Sprint 4 & Final Demo (Weeks 7-8):**
-  - Complete the Admin Console for model management (listing, training, deletion).
-  - Achieve full E2E test coverage and finalize CI/CD triggers.
-  - Polish the user interface with advanced marketing elements.
-  - Conduct final quality assurance (QA) and integrate stakeholder feedback.
-  - Finalize presentation materials and documentation for the demo.
+- **Sprint 1 (Weeks 1-2): Core Codebase Integration**
+  - **Backend & ML API Core Development:**  
+    - Finalize the FastAPI skeleton with core endpoints (e.g., `/health`, `/predict/`).
+    - Develop dummy ML inference and training endpoints within the Model API using placeholder logic.
+    - Define and implement core Pydantic schemas for prediction and training data.
+  - **Database & Configuration:**  
+    - Fully integrate the Supabase service by establishing and testing the initial database schema (authentication tables, user data, sessions).
+    - Validate all environment configurations and connectivity between backend and Supabase.
+  - **Frontend Core Integration:**  
+    - Bootstrap the React SPA using TypeScript and Tailwind CSS.
+    - Implement essential pages including the landing page and dashboard with basic routing and functional UI components.
+  - **Core Testing & CI/CD:**  
+    - Ensure that all core components are covered by initial unit tests.
+    - Validate that containers launch and communicate via Docker Compose.
+  - **Task Management:**  
+    - All tasks are tracked in the project’s issue tracker with clear assignment and deadlines (refer to the detailed Sprint 1 task document).
+
+- **Sprint 2 (Weeks 3-4): Authentication & API Refinement**
+  - **Authentication & User Management Initiation:**  
+    - Integrate basic user registration and login functionalities.
+    - Begin implementing secure session management and assign preliminary user roles.
+  - **Backend Refinement:**  
+    - Enhance error handling, logging, and data validation in backend endpoints.
+    - Expand unit tests to verify improvements and new authentication flows.
+  - **Frontend Enhancements:**  
+    - Enhance the landing page and dashboard by integrating dynamic content from backend endpoints.
+    - Ensure smooth connection between frontend components and newly implemented authentication mechanisms.
+
+- **Sprint 3 (Weeks 5-6): Feature Enhancement & Performance Optimization**
+  - **Advanced Authentication & API Refinement:**  
+    - Complete and refine full authentication and user management workflows.
+    - Improve API stability by optimizing ML model training routines and inference pipelines.
+  - **Performance Optimization:**  
+    - Integrate advanced logging and error management practices.
+    - Address edge-case handling and fine-tune backend performance based on test feedback.
+  - **End-to-End Testing:**  
+    - Initiate comprehensive E2E tests using Cypress/Playwright to ensure system-wide integration.
+
+- **Sprint 4 & Final Demo (Weeks 7-8): Production Hardening & Final QA**
+  - **Admin Console Development:**  
+    - Fully implement an admin console for model management, including listing, training, and deletion functionalities.
+  - **Final UI/UX Polishing:**  
+    - Incorporate final stakeholder feedback to refine the user interface across the application.
+  - **Quality Assurance:**  
+    - Achieve full E2E test coverage, finalize CI/CD configurations, and conduct thorough QA sessions.
+    - Secure final stakeholder approval before the project submission.
 
 ---
 
