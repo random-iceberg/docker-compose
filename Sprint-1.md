@@ -3,13 +3,13 @@
 **Sprint Duration:** 2 Weeks  
 **Team Members & Hours (Approx.):**  
 - **Fullstack Developers (40h total each):**
-  - John Doe
-  - Jane Smith
-  - Michael Brown
-  - Sarah Davis
+  - Denisa-Iulia Vaidasigan @dv11079
+  - Fares Elbermawy @fe18597
+  - Huraira Ali @ha06705
+  - Kazi Rahman @kr09619
 - **Backend & Model Specialists (40h total each):**
-  - Emily Johnson
-  - David Williams
+  - Lev Malets @lm21363
+  - Sameer Kumar @sk20179
 
 ---
 
