@@ -36,7 +36,7 @@ Your task is to develop a web application powered by artificial intelligence to 
 - Submit the solution in the form of a ZIP archive via iLearn.
 - Functional and non-functional requirements both contribute to the final grade.
 - The project is only passed if 50% is reached in all contributions individually.
-- Only the requirements outlined in this document are relevant.
+- Only the requirements outlined in this document are relevant. (This has been coordinated with the project team and the professor, refer to Project Charter for the finalized decisions.)
 - Any corrections or additions to these requirements are published in iLearn under the section **Project Requirement Updates**.
 - Only submissions that build successfully without errors (Docker on Ubuntu Noble Numbat 24.04 LTS) are graded.
 - Only commits using the official student email address (@stud.th-deg.de) are graded.
