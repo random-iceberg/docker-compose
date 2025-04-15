@@ -16,285 +16,238 @@
 ## 1. Sprint Overview
 
 **Sprint Goal:**  
-Deliver the **complete, production-ready MVP** of the Titanic Survivor Prediction Application, encompassing all major features and integrated services. By the end of this sprint, every essential component—**frontend pages**, **backend logic**, **ML model pipeline**, **authentication and database setup**, **admin console**, and **marketing/advertisement integration**—must be **fully functional** and **packaged** in a single Docker Compose configuration.  
-
-In other words, at Sprint 1 completion, the application should be ready to **deploy to a production environment** without missing functionality or placeholders.
+Deliver a **complete, production-ready MVP** of the Titanic Survivor Prediction Application that includes all major features and integrated services (frontend pages, backend prediction logic, ML model pipeline, admin console, marketing/advertisement integration, and Docker Compose orchestration), *without* incorporating user account or authentication flows (those will come in a later sprint). This sprint focuses on providing fully functional prediction capabilities, accessible immediately upon deployment.
 
 **Key Deliverables:**
 1. **Production-Ready Docker Infrastructure**  
-   - A single `docker-compose.yml` that orchestrates all containers (frontend, backend, model, and Supabase).
-2. **Complete Frontend (React + TypeScript)**  
-   - Landing page, Survival Calculator, Advertisement/Marketing pages, and optional Admin Console UI.
-3. **Backend (FastAPI) with Authentication**  
-   - Endpoints for predictions, user registration/login, role-based access, and admin capabilities.
-4. **ML Model Service**  
-   - Endpoints for model inference, training (optional re-training), and version persistence.
-5. **Admin Console**  
-   - UI and endpoints to view, train, and manage ML models.
-6. **User and Data Management (Supabase)**  
-   - Production-level user authentication, session handling, and secure data storage.
-7. **Marketing & Ads Integration**  
-   - Frontend sections or modals featuring the promotional narrative for AI courses.
-8. **Test Coverage & Final Documentation**  
-   - Automated tests (unit + integration + initial E2E) with CI/CD pipeline checks passing.
-   - Updated documentation (in `docs/` and any relevant wikis) reflecting the finalized MVP.
+   - A single `docker-compose.yml` that orchestrates all containers (frontend, backend, model, and Supabase for data storage).
+
+2. **Complete Frontend (React + TypeScript)**
+   - A production-grade landing page with marketing content.
+   - A fully functional Survival Calculator UI that collects passenger attributes and displays prediction results.
+   - An Admin Console UI for model management, accessible through a dedicated interface (no authentication restrictions yet).
+
+3. **Backend (FastAPI) for Predictions**
+   - A `POST /predict` endpoint that receives passenger data and returns survival predictions by calling the Model API.
+   - Robust error handling and data validation for prediction requests.
+   - Logging of prediction requests for auditing.
+
+4. **ML Model Service**
+   - Endpoints for real-time inference (`/inference/`) with a stable, cached ML model.
+   - An optional `/training/` endpoint for retraining the model and storing artifacts.
+
+5. **Marketing & Advertisement Integration**
+   - Dedicated UI elements (banners, calls to action, etc.) on the landing page highlighting AI courses.
+
+6. **Test Coverage & Final Documentation**
+   - Automated unit and integration tests for both frontend and backend.
+   - Updated documentation (in each service’s `README.md` and the `docs/` folder) reflecting the final MVP configuration.
 
 ---
 
 ## 2. Sprint Objectives
 
-1. **Finalize Docker Compose & Deployment**  
-   - Ensure **zero local configuration** is required: `docker-compose up --build -d` fully deploys the MVP.
-   - Configure environment variables within the Compose file or container definitions (no `.env` usage).
-   - Validate all services communicate properly in the Docker network (frontend → backend → model, etc.).
+1. **Finalize Docker Compose & Deployment**
+   - Achieve **zero local configuration**: running `docker-compose up --build -d` should fully deploy the MVP.
+   - Define all essential environment variables within the Compose file (no `.env` usage).
+   - Verify reliable network calls between containers (frontend → backend → model).
 
-2. **Complete Frontend Implementation**  
-   - **Landing Page**: Production-quality design explaining the application and highlighting AI course ads.
-   - **Survival Calculator**: Fully functional form with real-time or on-demand predictions.
-   - **Authentication UI**: Registration and login flows, error handling, session persistence.
-   - **Admin UI**: If user has admin privileges, show pages for model management (list, train, remove).
-   - **Responsive Design**: Works on desktop and mobile.  
-   - **Testing**: Basic component and user-flow tests (React Testing Library, Jest, or similar).
+2. **Complete Frontend Implementation**
+   - **Landing Page:** Deliver a production-quality design that explains the application’s purpose and highlights AI course ads.
+   - **Survival Calculator:** Build a form-based component that collects the necessary passenger attributes (e.g., class, age, sex, fare, embarked) and displays the prediction result.
+   - **Admin Console UI:** Implement a basic area to view available models and trigger training operations (no authentication barriers).
+   - Ensure the UI is fully responsive on both desktop and mobile.
+   - Include basic component and user-flow tests using React Testing Library or Jest.
 
-3. **Robust Backend (FastAPI) with Auth**  
-   - **Prediction API**: Endpoints for calculating survival probability; must handle required features (age, sex, class, etc.).
-   - **Auth & Role Management**: `POST /register`, `POST /login`, session/role checks for admin vs. standard user.
-   - **Error Handling & Validation**: Proper status codes and descriptive messages for invalid requests.
-   - **Admin Endpoints**: e.g., `GET /models`, `POST /models/train`, `DELETE /models/{id}`, etc.
-   - **Logging & Monitoring**: Basic logs for auditing predictions, admin actions, and potential errors.
+3. **Robust Backend for Predictions**
+   - **Prediction API:** Provide a `POST /predict` endpoint that validates incoming data and returns a structured prediction.
+   - Use appropriate HTTP status codes and descriptive error messages.
+   - Log all prediction requests for auditing.
 
-4. **ML Model Service**  
-   - **Persisted Model**: A stable ML model (Random Forest, SVM, or Logistic Regression) trained on Titanic dataset.
-   - **Inference Endpoint**: Exposed at `POST /inference/` with real predictions for given passenger data.
-   - **Optional Training Endpoint**: `POST /training/` to initiate re-training or advanced usage.
-   - **Production Configuration**: Ensure model loading, caching, or reloading does not impede performance.
+4. **ML Model Service**
+   - Load and cache a trained Titanic ML model (e.g., Random Forest or SVM) at startup.
+   - Expose an `/inference/` endpoint for real-time predictions, returning numeric probabilities or classifications.
+   - Provide a `/training/` endpoint to retrain the model, save artifacts, and (optionally) return metrics.
+   - Optimize model loading and inference for production performance.
 
-5. **Supabase Integration**  
-   - **User Accounts**: Fully operational sign-up, login, session management, password hashing (via GoTrue).
-   - **Database**: Store user data, keep track of user roles (admin/regular), potentially save last predictions.
-   - **Security**: Restrict admin actions, sensitive data, or logs to authorized roles only.
+5. **Marketing & Advertisement**
+   - Integrate engaging marketing visuals, text blocks, and calls to action that promote AI courses.
+   - Deliver a consistent, polished design across all devices.
 
-6. **Marketing & Advertisement**  
-   - Dedicated UI or integrated banners featuring the marketing text for AI courses.
-   - Clear CTAs that link externally or provide pop-up details about the educational offerings.
-   - Engaging visuals (images, infographics) to catch user interest.
-
-7. **Automated Testing & CI/CD**  
-   - **Unit Tests**: Frontend components, backend routes, model pipeline.
-   - **Integration Tests**: Checking end-to-end data flow (prediction calls, user auth, etc.).
-   - **(Optional) E2E Tests**: Basic flows with Cypress/Playwright to confirm major user journeys are intact.
-   - **GitLab CI/CD**: Blocks merges on failing builds/tests. Docker images built automatically on push.
-
-8. **Documentation**  
-   - Updated `README.md` for each module (frontend, backend, model) plus central docs in `docs/`.
-   - Clear instructions on how to run, test, and deploy the MVP.
-   - Architecture diagrams in the wiki or `docs/` submodule for final MVP.
+6. **Automated Testing & Documentation**
+   - Implement robust unit and integration test coverage.
+   - Update all documentation (`README.md` files, `docs/` folder) so new developers can deploy the MVP with a single command.
+   - Ensure automated CI pipelines verify the entire system.
 
 ---
 
 ## 3. Epics & Task Breakdown
 
-Below are the primary epics and tasks to achieve the **production-ready MVP** in this sprint. Each task should have a corresponding GitLab issue with clear acceptance criteria and assigned owner(s). All tasks must close before the sprint ends.
+All tasks below must be completed for a production-ready MVP. Each task should map to a GitLab issue with clear acceptance criteria and an assigned owner.  
 
 ### Epic A: Production Docker & Environment Setup
 
-**Goal:** A single, final `docker-compose.yml` that deploys the entire MVP with no extra steps.
-
 - **Task A1: `feat/docker-compose-setup`**  
   - **Description:**  
-    - Finalize the multi-service Docker Compose config (frontend, backend, model, supabase).
-    - Remove `.env` usage; define all essential environment variables in the Compose file.
-    - Expose proper ports (e.g., `3000` for frontend, `8000` for backend, `5000` for model, `5432` for Supabase).
+    - Finalize the multi-service Docker Compose configuration for frontend, backend, model, and Supabase (data storage only).
+    - Eliminate `.env` usage; define required environment variables directly in the Compose file.
+    - Expose and map essential ports (e.g., `3000` for frontend, `8000` for backend, `5000` for model, `5432` for Supabase).
   - **Acceptance Criteria:**  
-    1. `docker-compose up --build -d` runs all services without error.  
-    2. Network calls between containers (e.g., backend ↔ model, backend ↔ supabase) work reliably.  
-    3. No local config/manual edits needed; the user sees the app on `http://localhost:3000/` post-spin-up.  
+    1. Running `docker-compose up --build -d` starts all services without errors.
+    2. Inter-container communication (e.g., backend ↔ model) is reliable.
+    3. The application is reachable at `http://localhost:3000/` without manual config steps.
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task A2: `feat/ci-cd-prod-build`**  
   - **Description:**  
-    - Extend GitLab CI to build Docker images for all services on each commit.
-    - Validate images by running short container tests (e.g., health checks).
-    - Ensure pipeline fails if containers cannot build or start properly.
+    - Extend GitLab CI to auto-build Docker images for all services on each commit.
+    - Validate images via container-level tests or health checks.
+    - Ensure pipeline failures block merges if any container fails to build or start.
   - **Acceptance Criteria:**  
-    1. Every push triggers a Docker build job for each service.  
-    2. Automated container-level tests/health checks run and pass.  
-    3. Pipeline blocks merges on failures.  
+    1. Each push triggers Docker builds for all services.
+    2. Automated container health checks pass.
+    3. Merge requests are blocked if pipelines fail.
   - **Estimate:** 5h  
   - **Owner(s):** [Assign in GitLab]
 
 ### Epic B: Frontend (React + TypeScript + Tailwind)
 
-**Goal:** A polished, user-friendly SPA that covers all essential pages and flows.
-
 - **Task B1: `feat/frontend-landing-marketing`**  
   - **Description:**  
-    - Implement a production-grade landing page with marketing content.  
-    - Integrate marketing visuals, CTA buttons, and disclaimers.  
-    - Ensure responsiveness for mobile and desktop screens.
+    - Deliver a production-grade landing page with integrated marketing content and visuals.
+    - Include CTA buttons for the Survival Calculator and Admin Console.
+    - Ensure the layout is fully responsive.
   - **Acceptance Criteria:**  
-    1. Landing page design matches marketing specs (images, text blocks, CTAs).  
-    2. Fully responsive layout with no major rendering issues.  
-    3. Clear link to the Survival Calculator, registration/login, and admin console (if authorized).  
+    1. The landing page meets marketing specifications (images, text blocks, CTAs).
+    2. The layout is responsive on desktop and mobile.
+    3. Users can easily navigate to the Survival Calculator and Admin Console.
   - **Estimate:** 8h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task B2: `feat/survival-calculator-ui`**  
   - **Description:**  
-    - Create a form-based component that collects passenger attributes (age, fare, etc.).  
-    - On submit (or real-time), calls the backend for predictions.  
-    - Displays the survival probability or result in a user-friendly manner.
+    - Implement a form-based component for collecting passenger attributes (e.g., class, sex, age, fare, embarked).
+    - On submit (or in real-time), call the backend to retrieve a prediction.
+    - Provide graceful error handling for server downtime or invalid inputs.
   - **Acceptance Criteria:**  
-    1. All relevant input fields (class, sex, age, embarked, etc.) are present and validated.  
-    2. Prediction is displayed with a success/failure alert or probability.  
-    3. Handles errors gracefully (e.g., server down, invalid input).  
+    1. All required input fields are present and validated.
+    2. Prediction results are displayed clearly (e.g., success/failure alerts or probabilities).
+    3. Errors are handled gracefully with descriptive user feedback.
   - **Estimate:** 8h  
   - **Owner(s):** [Assign in GitLab]
 
-- **Task B3: `feat/auth-ui-integration`**  
+- **Task B3: `feat/admin-console-frontend`**  
   - **Description:**  
-    - Build user registration and login forms.  
-    - Manage JWT tokens or cookies for session persistence (via Supabase).  
-    - Show “Admin Console” menu item only if user is admin (role check).
+    - Create an Admin Console UI showing a list of models (e.g., name, date trained, accuracy).
+    - Allow “Train Model” or “Delete Model” actions (calling backend endpoints).
+    - Provide a functional, responsive interface without user authentication.
   - **Acceptance Criteria:**  
-    1. Users can register, log in, and stay logged in (session persisted).  
-    2. Error messages displayed for invalid credentials or duplicate email.  
-    3. Admin users see restricted routes to model management.  
-  - **Estimate:** 8h  
-  - **Owner(s):** [Assign in GitLab]
-
-- **Task B4: `feat/admin-console-frontend`**  
-  - **Description:**  
-    - Provide an admin-specific area (accessible only if `role=admin`).  
-    - Display list of models, allow new training, model deletion, or settings updates.  
-    - Show training status, logs, or performance metrics (if available from backend).
-  - **Acceptance Criteria:**  
-    1. Admin sees a UI list of models with basic info (e.g., name, date trained, accuracy).  
-    2. “Train Model” or “Delete Model” triggers the correct backend endpoints.  
-    3. Non-admin users cannot access these pages (redirect or 403).  
+    1. The admin console lists existing models and relevant metadata.
+    2. “Train Model” or “Delete Model” triggers backend endpoints successfully.
+    3. The interface is intuitive and responsive.
   - **Estimate:** 8h  
   - **Owner(s):** [Assign in GitLab]
 
 ### Epic C: Backend & Core APIs (FastAPI)
 
-**Goal:** A complete set of production-ready endpoints for predictions, user management, and admin functionalities.
-
-- **Task C1: `feat/backend-auth`**  
-  - **Description:**  
-    - Implement registration, login, session validation (JWT or token-based) with role assignment.  
-    - Sync user credentials with Supabase’s GoTrue or any necessary DB calls.  
-  - **Acceptance Criteria:**  
-    1. `POST /register` and `POST /login` yield valid tokens or sessions.  
-    2. Backend enforces role checks for admin-only routes.  
-    3. Security best practices in place (hashed passwords, no plaintext storage).  
-  - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
-
 - **Task C2: `feat/backend-prediction`**  
   - **Description:**  
-    - Create a `POST /predict` endpoint that receives passenger data and calls the Model API for inference.  
-    - Validate user input, handle errors, and return a structured response.  
-    - Integrate optional logging (who predicted, what was predicted) in the DB.
+    - Develop a `POST /predict` endpoint that accepts passenger data, forwards it to the Model API, and returns structured results.
+    - Validate input data thoroughly.
+    - Log prediction events for auditing.
   - **Acceptance Criteria:**  
-    1. Endpoint responds with survival probability and status (e.g., “survived” or “not survived”).  
-    2. Graceful handling of invalid data or missing fields (HTTP 400).  
-    3. Works for both anonymous and authenticated users; if user is logged in, store or track predictions.  
+    1. The endpoint returns a JSON response with survival probability or status.
+    2. Invalid or missing data triggers an HTTP 400 with a descriptive message.
+    3. All prediction requests are logged for future auditing.
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task C3: `feat/backend-admin-endpoints`**  
   - **Description:**  
-    - Endpoints for listing models (`GET /models`), training new models (`POST /models/train`), and deleting old ones (`DELETE /models/{id}`).  
-    - Restrict all these routes to admin users only.  
-    - Provide relevant logging for auditing changes.
+    - Add endpoints to list models (`GET /models`), initiate training (`POST /models/train`), and delete models (`DELETE /models/{id}`).
+    - No authentication is required for this MVP.
   - **Acceptance Criteria:**  
-    1. Admin endpoints respond only if `role=admin`; otherwise 403.  
-    2. Standard JSON structures for listing/training/deleting.  
-    3. Database or container volumes updated accordingly (models saved/deleted).  
+    1. All endpoints return standard JSON and update underlying data (model artifacts) as expected.
+    2. Responses are logged for auditing.
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab]
 
 ### Epic D: Model Microservice (FastAPI)
 
-**Goal:** A production-level ML pipeline for inference and optional re-training.
-
 - **Task D1: `feat/model-service-inference`**  
   - **Description:**  
-    - Load a final, trained Titanic ML model (Random Forest or SVM) on service startup.  
-    - `/inference/` endpoint to process feature input and return predictions.  
-    - Handle model loading errors or missing model gracefully.  
+    - Load the final Titanic ML model (e.g., Random Forest or SVM) at service startup, caching it for performance.
+    - Provide a `/inference/` endpoint receiving input features and returning predictions.
+    - Handle errors gracefully (e.g., if model loading fails).
   - **Acceptance Criteria:**  
-    1. Model is loaded once at startup (caching).  
-    2. Endpoint returns numeric probability or classification.  
-    3. Standard logs exist for each request.  
+    1. The ML model is loaded only once at startup.
+    2. The inference endpoint returns numeric probabilities or classification results.
+    3. Logs detail each inference request for traceability.
   - **Estimate:** 5h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task D2: `feat/model-service-training`**  
   - **Description:**  
-    - Expose a `/training/` endpoint that can re-train a model on the Titanic dataset.  
-    - Save newly trained model artifacts (e.g., `.pkl`) into a shared volume.  
-    - Optionally track training metrics (accuracy, F1, etc.) in a DB or local file.  
+    - Implement a `/training/` endpoint to retrain the model with the Titanic dataset.
+    - Store new model artifacts (`.pkl` files) on a shared volume.
+    - Optionally return training metrics (e.g., accuracy, F1 score).
   - **Acceptance Criteria:**  
-    1. Model re-training completes without freezing or container crash.  
-    2. New model artifacts are stored properly for subsequent usage.  
-    3. Endpoint returns training completion status and optional metrics.  
+    1. Training completes without container crashes.
+    2. Newly trained model artifacts are saved correctly and can replace or supplement existing ones.
+    3. The endpoint returns a status message and (optionally) relevant metrics (e.g., “accuracy: 0.85”).
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab]
 
 ### Epic E: Supabase Integration & Data Persistence
 
-**Goal:** Fully functional user data and session management, plus optional logging of predictions or user interactions.
+*Note: For this sprint, user account management is deferred, but basic Supabase configuration for data storage is included.*
 
 - **Task E1: `feat/supabase-setup-complete`**  
   - **Description:**  
-    - Finish configuring Supabase (Postgres + GoTrue) for production.  
-    - Migrate or seed database schemas for user accounts, roles, logs, or predictions.  
-    - Verify connectivity from the backend services.  
+    - Configure Supabase (Postgres + GoTrue) in production mode.
+    - Migrate or seed any required database schemas (e.g., logs or model references).
+    - Verify backend connectivity to Supabase.
   - **Acceptance Criteria:**  
-    1. `docker-compose` starts Supabase with correct credentials and roles.  
-    2. Backend can create/read/update user data and sessions.  
-    3. Admin roles recognized by GoTrue or custom DB logic.  
+    1. `docker-compose` successfully starts Supabase with correct credentials.
+    2. The backend can create/read/update relevant data and logs.
+    3. Any roles or privileges are set appropriately (if needed).
   - **Estimate:** 5h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task E2: `feat/production-db-handlers`**  
   - **Description:**  
-    - Implement robust DB interactions for storing predictions (optional), user logs, or admin events.  
-    - Use transactions and handle potential DB errors gracefully.  
+    - Implement stable database operations for storing predictions, logs, or admin events.
+    - Use transactions and handle potential DB failures gracefully.
   - **Acceptance Criteria:**  
-    1. Relevant data persists between app restarts, easily queryable for metrics or debugging.  
-    2. Clear error messages returned if DB operations fail (e.g., 500 + logs).  
-    3. CI tests confirm DB migrations or queries run successfully.  
+    1. Data persists across app restarts and is queryable for metrics/debugging.
+    2. Database errors produce clear error messages and logs.
+    3. CI tests confirm successful migrations or queries.
   - **Estimate:** 5h  
   - **Owner(s):** [Assign in GitLab]
 
 ### Epic F: Final Testing & Documentation
 
-**Goal:** Validate the entire MVP is stable and properly documented.
-
 - **Task F1: `test/unit-integration-e2e`**  
   - **Description:**  
-    - Ensure all code paths have unit tests (frontend + backend).  
-    - Write integration tests to verify user flows: registering, logging in, predicting, admin actions.  
-    - (Optional) Add E2E tests using Cypress/Playwright for a minimal “happy path” scenario.  
+    - Write comprehensive unit tests for backend, frontend, and model microservice components.
+    - Create integration tests for key user flows (e.g., prediction requests, model management in the admin console).
+    - (Optionally) implement basic E2E tests with Cypress or Playwright on the main “happy paths.”
   - **Acceptance Criteria:**  
-    1. No critical path remains untested (basic coverage at minimum).  
-    2. Merging code that breaks tests is blocked in GitLab CI.  
-    3. E2E tests pass for main user stories.  
+    1. All critical code paths have adequate unit and integration test coverage.
+    2. CI pipelines block merges if any test fails.
+    3. E2E tests pass on the core user journeys.
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab]
 
 - **Task F2: `docs/finalize-mvp`**  
   - **Description:**  
-    - Update all `README.md` files (frontend, backend, model, root) to reflect final usage.  
-    - Provide detailed instructions in the `docs/` or wiki (e.g., architecture diagrams, environment variables, usage instructions).  
-    - Document the final architecture, including how the services communicate and data flows.  
+    - Refresh all `README.md` files (frontend, backend, model, and root) to reflect final usage instructions.
+    - Provide thorough documentation in `docs/` for deploying via `docker-compose up --build -d` and an overview of each service.
   - **Acceptance Criteria:**  
-    1. All references to “placeholder” or “TBD” are removed.  
-    2. New developers can clone and run the entire app solely using the documentation.  
-    3. The final doc set matches the completed features for the MVP.  
+    1. All placeholder references are removed.
+    2. A new developer can deploy and test the MVP end to end with the provided instructions.
+    3. Documentation accurately represents the final state of the MVP.
   - **Estimate:** 4h  
   - **Owner(s):** [Assign in GitLab]
 
@@ -303,21 +256,21 @@ Below are the primary epics and tasks to achieve the **production-ready MVP** in
 ## 4. Agile Workflow & Coordination
 
 - **Standup Meetings (2x Weekly):**  
-  Short 15-minute calls to discuss progress, blockers, and next steps.
+  Brief 15-minute calls to report progress, clear blockers, and plan the next steps.
 
 - **Task Management:**  
-  All tasks tracked as GitLab issues with clear acceptance criteria, estimates, and owners. Use labels (e.g., `backend`, `frontend`, `model`, `supabase`) for easy filtering.
+  All tasks appear as GitLab issues with acceptance criteria, time estimates, and labels (e.g., `frontend`, `backend`, `model`).
 
 - **Code Reviews:**  
-  - Each merge request must be peer-reviewed for quality, adherence to style, and robust testing.
-  - All merges require passing CI checks.
+  - Every merge request undergoes peer review for code quality, style adherence, and testing sufficiency.
+  - Merges are only allowed if all CI checks pass.
 
 - **Continuous Integration (GitLab CI):**  
-  - On every push, run:
-    1. Lint and unit tests for backend, frontend, and model.
-    2. Docker image builds for all services.
-    3. Short container-level integration checks.
-  - Pipeline failures block merges unless explicitly overridden.
+  - Each push triggers:
+    1. Linting and unit tests for backend, frontend, and model.
+    2. Docker builds for all services.
+    3. Container-level integration checks.
+  - Merge requests are blocked on CI failures.
 
 ---
 
@@ -325,45 +278,40 @@ Below are the primary epics and tasks to achieve the **production-ready MVP** in
 
 **Sprint Review (End of Week 2):**  
 1. **Live End-to-End Demo:**  
-   - Demonstrate the entire user flow: a new user registers, logs in, accesses the survival calculator, obtains predictions, and (if admin) manages models in the console.  
-   - Confirm marketing content is visible and user-friendly on the landing page.  
+   - Demonstrate the complete workflow: using the Survival Calculator to obtain predictions and the Admin Console to manage models.
+   - Verify that landing-page marketing content displays correctly.
 2. **Production-Ready Check:**  
-   - Spin up the system on a clean environment using `docker-compose up --build -d`.  
-   - Show no missing steps or manual config is required.  
+   - Deploy on a fresh environment via `docker-compose up --build -d`; confirm no manual config steps are required.
 3. **Testing Verification:**  
-   - Confirm that unit, integration, and minimal E2E tests pass with no regressions.  
+   - All unit, integration, and (if implemented) E2E tests pass without regressions.
 
 **Retrospective:**  
 - **What Went Well?**  
-  - Identify successes in delivering the entire MVP in one sprint.  
-- **What Could Be Better?**  
-  - Discuss any blockers or challenges in time management or collaborative coding.  
-- **Action Items**  
-  - Document improvement steps for future expansions or maintenance.
+  - Celebrate successes in delivering a production-ready MVP within one sprint.
+- **What Could Be Improved?**  
+  - Discuss any time-management challenges or technical blockers.
+- **Action Items:**  
+  - Document key takeaways for future sprints.
 
 ---
 
 ## 6. Key Considerations
 
-1. **Fully Production-Ready**  
-   - No placeholder code or partial features left incomplete.  
-   - Both technical (scalability, security) and design (UI/UX, marketing) must be polished.
+1. **Production-Ready Features**  
+   - No placeholder code remains.
+   - The entire system (prediction logic, model management, marketing) is fully operational.
 
-2. **Supabase & Security**  
-   - Strictly ensure user and admin roles are respected throughout the stack.  
-   - Credentials or secrets must be stored securely (no plain text in code repos).
+2. **Separation of Concerns**  
+   - User registration and authentication will be introduced in Sprint 2.
+   - The current MVP focuses on essential predictions, model management, and marketing integration.
 
 3. **Performance & Stability**  
-   - Load model once, handle concurrency gracefully.  
-   - Docker Compose resource limits can be tuned if needed, but correctness is the priority.
+   - Load the ML model once; cache it to ensure high-performance inference.
+   - Confirm reliable Docker networking among services.
 
-4. **Delivery on Time**  
-   - The sprint must conclude with the final version.  
-   - No second sprint for core MVP—any additional improvements or refactoring can follow in maintenance sprints if desired.
-
-5. **Documentation Completeness**  
-   - Thorough, up-to-date docs enabling any developer or stakeholder to run, test, and evaluate the final product.
+4. **Documentation Completeness**  
+   - All relevant instructions are included so new team members can deploy and test the MVP in one step.
 
 ---
 
-*This revised Sprint-1 plan ensures that a **fully functional MVP** is delivered by the end of this two-week window. By combining all critical features—Docker Compose orchestration, a polished React frontend, robust FastAPI backend, ML-driven inference microservice, and Supabase authentication/data layer—into a single sprint, the team commits to producing a final, production-ready application without placeholders or missing elements.*
+*This plan ensures the project achieves a fully functional MVP for Titanic survival predictions—complete with Docker-based deployment, model management, marketing integration, thorough testing, and clear documentation—within the first two-week sprint.* 
