@@ -1,4 +1,7 @@
-# Summerterm 2025
+---
+title: Project Requirements
+---
+# Project Requirements: Summerterm 2025
 
 **Prof. Dr. Christoph Schober**  
 Email: christoph.schober@th-deg.de
