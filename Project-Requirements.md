@@ -32,7 +32,7 @@ Your task is to develop a web application powered by artificial intelligence to 
   - All source code, configuration files, documentation.
   - All Git repositories as downloaded from Gitlab according to the provided documentation.
   - A README file explaining how to build, run, and access the web application using the Docker images and Docker Compose specification.
-  - A PDF of the team presentation.
+  - A PDF of the team presentation. (We will use Figma Slide Deck for the presentation.)
 - Submit the solution in the form of a ZIP archive via iLearn.
 - Functional and non-functional requirements both contribute to the final grade.
 - The project is only passed if 50% is reached in all contributions individually.
@@ -119,15 +119,15 @@ Your task is to develop a web application powered by artificial intelligence to 
 
 #### Project Management
 
-- The project shall be conducted according to the Scrum framework with a total of 3 sprints (each with a sprint length of 3 weeks).
+- The project shall be conducted according to the Scrum framework with a total of 3 sprints (each with a sprint length of 3 weeks). (We have adjusted it to 4 sprints of 2 weeks each.)
 - A Product Backlog shall be created and maintained according to this document.
-- All non-code project resources shall be managed and maintained within the Gitlab project **project-management**.
+- All non-code project resources shall be managed and maintained within the Gitlab project **project-management**. (we are using the docker-compose.wiki repo instead)
   - At any time, the assets in Gitlab shall reflect the current state of the project.
 - The dates and deadlines published in iLearn under the section **Dates and Deadlines** shall apply. All deadlines are hard.
-- The source code shall be actively managed in mygit ([Mygit Portal](https://mygit.th-deg.de)) using the provided team Gitlab group.
+- The source code shall be actively managed in mygit ([Mygit Portal](https://mygit.th-deg.de)) using the provided team Gitlab group. (we are using [Team/Random_Iceberg](https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg) group).
 - From the official start of the project, at least one git commit with code is done per week.
 
-#### Web Frontend
+#### Web Frontend (Refer to Project Charter)
 
 - The frontend shall work in the following browser versions:
   - Chrome >= 119
@@ -147,12 +147,12 @@ Your task is to develop a web application powered by artificial intelligence to 
   - It shall route all external traffic to the respective internal service and serve the static files for the web frontend.  
     *(Note: No `npm run dev` in production code!)*
 
-#### Web Backend
+#### Web Backend (Refer to Project Charter)
 
 - Code shall be written in Python using [FastAPI](https://fastapi.tiangolo.com/).
 - Unit and Integration tests for all Python code shall be written using the [pytest framework](https://docs.pytest.org/en/8.0.x/).
 
-#### Model Backend
+#### Model Backend (Refer to Project Charter)
 
 - Code shall be written in Python using FastAPI as the framework for the RESTful API.
 - The prediction model inference shall be accessible via a RESTful API ([REST](https://en.wikipedia.org/wiki/REST)) within the Docker network.
