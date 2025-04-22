@@ -1,9 +1,6 @@
 services:
   # Frontend service (React)
   frontend:
-    build:
-      context: ./app/frontend
-      dockerfile: Dockerfile
     ports:
       - "8080:80" # nginx
     depends_on:
@@ -12,26 +9,20 @@ services:
 
   # Backend service (FastAPI)
   backend:
-    build:
-      context: ./app/backend
-      dockerfile: Dockerfile
     depends_on:
       - model
     restart: unless-stopped
+    environment:
+      BACKEND_WEB_ROOT: /api
 
   # Model service (ML predictions microservice)
   model:
-    build:
-      context: ./model
-      dockerfile: Dockerfile
     restart: unless-stopped
 
   # Supabase service (Postgres, GoTrue, Supavisor, etc.)
   # TODO
-
   db:
     image: supabase/postgres:17.4.1.016
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     environment:
       POSTGRES_PASSWORD: test
-

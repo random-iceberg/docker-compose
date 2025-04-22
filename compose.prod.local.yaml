@@ -1,0 +1,18 @@
+# Compose overrides to test production build locally
+services:
+  frontend:
+    build:
+      context: ./app/frontend
+      target: prod
+
+  backend:
+    build:
+      context: ./app/backend
+    environment:
+      ENVIRONMENT: production
+
+  model:
+    build:
+      context: ./model
+    environment:
+      ENVIRONMENT: production
