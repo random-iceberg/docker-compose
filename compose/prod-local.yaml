@@ -1,0 +1,12 @@
+# Configuration to test building of production locally
+#
+# The only supposed difference between this and the actual production config
+# is that this config builds containers from the source while the actual
+# production config will pull images from the gitlab container registry.
+
+# Merge relevant configurations together
+include:
+  - path:
+      - ./common.yaml
+      - ./prod-common.yaml
+      - ./prod-local-overrides.yaml

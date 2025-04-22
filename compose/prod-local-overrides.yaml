@@ -1,0 +1,16 @@
+# Overrides for configuration to test production build locally
+services:
+  frontend:
+    build:
+      context: ../app/frontend
+      target: prod
+
+  backend:
+    build:
+      context: ../app/backend
+      target: prod
+
+  model:
+    build:
+      context: ../model
+      target: prod

@@ -1,28 +1,4 @@
-services:
-  # Frontend service (React)
-  frontend:
-    ports:
-      - "8080:80" # nginx
-    depends_on:
-      - backend
-    restart: unless-stopped
-
-  # Backend service (FastAPI)
-  backend:
-    depends_on:
-      - model
-    restart: unless-stopped
-    environment:
-      BACKEND_WEB_ROOT: /api
-
-  # Model service (ML predictions microservice)
-  model:
-    restart: unless-stopped
-
-  # Supabase service (Postgres, GoTrue, Supavisor, etc.)
-  # TODO
-  db:
-    image: supabase/postgres:17.4.1.016
-    command: postgres -c config_file=/etc/postgresql/postgresql.conf
-    environment:
-      POSTGRES_PASSWORD: test
+# Default the default compose configuration to the development one to simplify
+# compose invocations
+include:
+  - ./compose/dev.yaml

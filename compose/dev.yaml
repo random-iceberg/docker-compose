@@ -1,0 +1,8 @@
+# Local development configuration
+
+# Merge relevant configurations together
+include:
+  - path:
+      - ./common.yaml
+      - ./dev-modules.yaml
+      - ./dev-overrides.yaml
