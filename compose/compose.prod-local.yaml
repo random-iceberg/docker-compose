@@ -4,6 +4,8 @@
 # is that this config builds containers from the source while the actual
 # production config will pull images from the gitlab container registry.
 
+name: random-iceberg-local
+
 # Merge relevant configurations together
 include:
   - path:
