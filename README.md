@@ -115,3 +115,4 @@ This command will:
   To remove volumes and reset the environment:
   ```bash
   docker compose down -v
+  ```
