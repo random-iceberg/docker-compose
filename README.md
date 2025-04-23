@@ -67,7 +67,7 @@ docker-compose/
 To build and start all services, run:
 
 ```bash
-docker-compose up --build -d
+docker compose -f ./compose/prod-local.yaml up --build -d
 ```
 
 This command will:
@@ -80,41 +80,38 @@ This command will:
 - **Updating Services**:  
   Update each submodule (frontend, backend, model) and rebuild using:
   ```bash
-  docker-compose pull
-  docker-compose up --build -d
+  docker compose -f ./compose/prod-local.yaml pull
+  docker compose -f ./compose/prod-local.yaml up --build -d
   ```
 
 - **Restarting Services**:  
   To apply configuration changes, run:
   ```bash
-  docker-compose down
-  docker-compose up -d
+  docker compose -f ./compose/prod-local.yaml down
+  docker compose -f ./compose/prod-local.yaml up -d
   ```
 
-- **Scaling**:  
-  For horizontal scaling, adjust service definitions as needed. For example, to scale the backend:
-  ```bash
-  docker-compose up --scale backend=3 -d
-  ```
+<!-- - **Scaling**:   -->
+<!--   For horizontal scaling, adjust service definitions as needed. For example, to scale the backend: -->
+<!--   ```bash -->
+<!--   docker-compose up --scale backend=3 -d -->
+<!--   ``` -->
 
 ## Troubleshooting
 
 - **Viewing Logs**:  
   To view logs for a specific service:
   ```bash
-  docker-compose logs [service_name]
+  docker compose -f ./compose/prod-local.yaml logs [service_name]
   ```
 
 - **Checking Service Health**:  
   Verify the status of all containers with:
   ```bash
-  docker-compose ps
+  docker compose -f ./compose/prod-local.yaml ps
   ```
 
 - **Resetting Data**:  
   To remove volumes and reset the environment:
   ```bash
-  docker-compose down -v
-  ```
-
-> **Note:** This configuration is designed as a starting point. Further enhancements (such as advanced security configurations, resource limits, and monitoring) may be required for production deployments.
+  docker compose -f ./compose/prod-local.yaml down -v
