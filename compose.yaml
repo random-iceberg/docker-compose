@@ -1,4 +1,3 @@
-# Default the default compose configuration to the development one to simplify
-# compose invocations
+# TODO: update to the production config, when it is ready
 include:
-  - ./compose/dev.yaml
+  - ./compose/compose.prod-local.yaml

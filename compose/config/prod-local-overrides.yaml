@@ -2,15 +2,15 @@
 services:
   frontend:
     build:
-      context: ../app/frontend
+      context: ../../app/frontend
       target: prod
 
   backend:
     build:
-      context: ../app/backend
+      context: ../../app/backend
       target: prod
 
   model:
     build:
-      context: ../model
+      context: ../../model
       target: prod

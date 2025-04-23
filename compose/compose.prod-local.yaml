@@ -7,6 +7,6 @@
 # Merge relevant configurations together
 include:
   - path:
-      - ./common.yaml
-      - ./prod-common.yaml
-      - ./prod-local-overrides.yaml
+      - ./config/common.yaml
+      - ./config/prod-common.yaml
+      - ./config/prod-local-overrides.yaml

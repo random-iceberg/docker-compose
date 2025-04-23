@@ -1,0 +1,8 @@
+# Production configuration
+
+# Merge relevant configurations together
+include:
+  - path:
+      - ./config/common.yaml
+      - ./config/prod-common.yaml
+      - ./config/prod-registry-overrides.yaml

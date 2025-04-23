@@ -67,7 +67,7 @@ docker-compose/
 To build and start all services, run:
 
 ```bash
-docker compose -f ./compose/prod-local.yaml up --build -d
+docker compose up --build -d
 ```
 
 This command will:
@@ -80,15 +80,15 @@ This command will:
 - **Updating Services**:  
   Update each submodule (frontend, backend, model) and rebuild using:
   ```bash
-  docker compose -f ./compose/prod-local.yaml pull
-  docker compose -f ./compose/prod-local.yaml up --build -d
+  docker compose pull
+  docker compose up --build -d
   ```
 
 - **Restarting Services**:  
   To apply configuration changes, run:
   ```bash
-  docker compose -f ./compose/prod-local.yaml down
-  docker compose -f ./compose/prod-local.yaml up -d
+  docker compose down
+  docker compose up -d
   ```
 
 <!-- - **Scaling**:   -->
@@ -102,16 +102,16 @@ This command will:
 - **Viewing Logs**:  
   To view logs for a specific service:
   ```bash
-  docker compose -f ./compose/prod-local.yaml logs [service_name]
+  docker compose logs [service_name]
   ```
 
 - **Checking Service Health**:  
   Verify the status of all containers with:
   ```bash
-  docker compose -f ./compose/prod-local.yaml ps
+  docker compose ps
   ```
 
 - **Resetting Data**:  
   To remove volumes and reset the environment:
   ```bash
-  docker compose -f ./compose/prod-local.yaml down -v
+  docker compose down -v
