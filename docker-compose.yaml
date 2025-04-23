@@ -1,3 +1,6 @@
 # TODO: update to the production config, when it is ready
+
+name: random-iceberg
+
 include:
   - ./compose/compose.prod-local.yaml
