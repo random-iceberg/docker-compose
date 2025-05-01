@@ -224,7 +224,7 @@ architecture-beta
 
 ## 6. Project Timeline and Sprint Structure
 
-To ensure rapid iteration, continuous integration, and prompt feedback, the project will be executed in **four sprints**, each spanning **2 weeks**. With a team of four dedicated full-stack developers and two dedicated Backend & Model Specialists (Emily Johnson and David Williams), our early efforts concentrate on delivering a production-ready core codebase that integrates the complete functionality skeleton: the frontend, backend (including the Model API), and the Supabase database. Core logic and configuration across all pages and endpoints are built during Sprint 1, while authentication and advanced user management are refined in Sprints 2 and 3.
+To ensure rapid iteration, continuous integration, and prompt feedback, the project will be executed in **four sprints**, each spanning **2 weeks**. With a team of four dedicated full-stack developers and two dedicated Backend & Model Specialists (Lev Malets and Sameer Kumar), our early efforts concentrate on delivering a production-ready core codebase that integrates the complete functionality skeleton: the frontend, backend (including the Model API), and the Supabase database. Core logic and configuration across all pages and endpoints are built during Sprint 1, while authentication and advanced user management are refined in Sprints 2 and 3.
 
 ### Milestones and Deliverables
 
@@ -311,11 +311,11 @@ The team is structured to encourage collaboration across the entire stack, ensur
 - **Alex (Lead Developer & Project Manager):**
   - Overall project coordination, task allocation, and schedule management.
   - Oversees architecture design, CI/CD pipeline configuration, and documentation updates.
-- **Fullstack Developers (John Doe, Jane Smith, Michael Brown, Sarah Davis):**
+- **Fullstack Developers (Denisa-Iulia Vaidasigan, Fares Elbermawy, Huraira Ali, Kazi Rahman):**
   - Develop and maintain the Web Frontend using React/TypeScript.
   - Implement RESTful endpoints and business logic in the Web Backend (FastAPI).
   - Contribute to unit, integration, and E2E testing.
-- **Backend & Model Specialists (Emily Johnson, David Williams):**
+- **Backend & Model Specialists (Lev Malets, Sameer Kumar):**
   - Focus on the Model Backend and Supabase/Postgres integration.
   - Develop, train, and manage ML models ensuring high performance and scalability.
   - Support API security, container orchestration, and CI/CD processes.
@@ -485,12 +485,12 @@ The project is considered complete and production-ready when the following crite
 By signing below, the team confirms that the project charter is complete, meets all functional and non-functional requirements, and is ready for final implementation.
 
 - **Alex** – Lead Developer & Project Manager
-- **John Doe** – Fullstack Developer
-- **Jane Smith** – Fullstack Developer
-- **Michael Brown** – Fullstack Developer
-- **Sarah Davis** – Fullstack Developer
-- **Emily Johnson** – Backend & Model Specialist
-- **David Williams** – Backend & Model Specialist
+- **Denisa-Iulia Vaidasigan** – Fullstack Developer
+- **Fares Elbermawy** – Fullstack Developer
+- **Huraira Ali** – Fullstack Developer
+- **Kazi Rahman** – Fullstack Developer
+- **Lev Malets** – Backend & Model Specialist
+- **Sameer Kumar** – Backend & Model Specialist
 
 ---
 
