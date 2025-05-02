@@ -2,9 +2,6 @@
 services:
   # Frontend service (React)
   frontend:
-    build:
-      context: ../../app/frontend
-      target: prod
     restart: unless-stopped
     depends_on:
       - backend
@@ -19,9 +16,6 @@ services:
 
   # Backend service (FastAPI)
   backend:
-    build:
-      context: ../../app/backend
-      target: prod
     restart: unless-stopped
     depends_on:
       - model
@@ -29,9 +23,8 @@ services:
       DB_USER: backend
       DB_DATABASE: backend
       DB_ADDRESS: postgres
-      DB_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
+      DB_PASSWORD: "${POSTGRES_PASSWORD_BACKEND:-_backend}"
       BACKEND_WEB_ROOT: /api
-      ENVIRONMENT: production
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:8000/health"]
       interval: 30s
@@ -46,9 +39,10 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data:delegated
     environment:
-      POSTGRES_USER: backend
-      POSTGRES_DB: backend
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
+      POSTGRES_PASSWORD_BACKEND: ${POSTGRES_PASSWORD_BACKEND:-_backend}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U backend -d backend"]
       interval: 30s
@@ -58,25 +52,15 @@ services:
 
   # Model service (FastAPI)
   model:
-    build:
-      context: ../../model
-      target: prod
     restart: unless-stopped
     depends_on:
       - postgres
-    environment:
-      DB_USER: backend
-      DB_DATABASE: backend
-      DB_ADDRESS: postgres
-      DB_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
-      ENVIRONMENT: production
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
-
 
 volumes:
   postgres-data:
