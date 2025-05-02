@@ -4,6 +4,6 @@ COPY ./initdb.d /docker-entrypoint-initdb.d
 RUN find /docker-entrypoint-initdb.d -type f -exec dos2unix {} \;
 # Use custom entrypoint to sync passwords
 COPY ./entrypoint.sh /usr/local/bin/
-RUN chmod 700 /usr/local/bin/entrypoint.sh
+RUN chmod 700 /usr/local/bin/entrypoint.sh && dos2unix /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["postgres"]
