@@ -2,7 +2,7 @@
 set -eu
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOF
-	CREATE ROLE backend LOGIN PASSWORD '$(cat /run/secrets/postgres_password_backend)';
+	CREATE ROLE backend LOGIN PASSWORD '$POSTGRES_PASSWORD_BACKEND';
 	CREATE DATABASE backend;
 	GRANT ALL PRIVILEGES ON DATABASE backend TO backend;
 
