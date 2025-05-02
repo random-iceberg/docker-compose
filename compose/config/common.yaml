@@ -2,52 +2,81 @@
 services:
   # Frontend service (React)
   frontend:
-    ports:
-      - "8080:80" # nginx
+    build:
+      context: ../../app/frontend
+      target: prod
+    restart: unless-stopped
     depends_on:
       - backend
-    restart: unless-stopped
+    ports:
+      - "8080:80" # nginx
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   # Backend service (FastAPI)
   backend:
+    build:
+      context: ../../app/backend
+      target: prod
+    restart: unless-stopped
     depends_on:
       - model
-      - postgres
-    restart: unless-stopped
     environment:
-      BACKEND_WEB_ROOT: /api
       DB_USER: backend
       DB_DATABASE: backend
       DB_ADDRESS: postgres
-      # DB_PASSWORD_FILE: /run/secrets/postgres_password_backend
-      DB_PASSWORD: _backend
-    secrets:
-      - postgres_password_backend
-
-  # Model service (ML predictions microservice)
-  model:
-    restart: unless-stopped
+      DB_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
+      BACKEND_WEB_ROOT: /api
+      ENVIRONMENT: production
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   # Database container (Postgres)
   postgres:
     build: ../postgres
     restart: unless-stopped
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data:delegated
     environment:
-      # POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-      POSTGRES_PASSWORD: _postgres
-      BACKEND_PASSWORD: _backend
-    secrets:
-      - postgres_password
-      - postgres_password_backend
+      POSTGRES_USER: backend
+      POSTGRES_DB: backend
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U backend -d backend"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # Model service (FastAPI)
+  model:
+    build:
+      context: ../../model
+      target: prod
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DB_USER: backend
+      DB_DATABASE: backend
+      DB_ADDRESS: postgres
+      DB_PASSWORD: "${POSTGRES_PASSWORD:-_postgres}"
+      ENVIRONMENT: production
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
 
 volumes:
-  postgres:
-
-# As all the configurations are for local use only, just set the secrets here
-secrets:
-  postgres_password:
-    environment: SECRET_POSTGRES_PASSWORD
-  postgres_password_backend:
-    environment: SECRET_POSTGRES_PASSWORD_BACKEND
+  postgres-data:
