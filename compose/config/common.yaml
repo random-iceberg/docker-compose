@@ -12,18 +12,40 @@ services:
   backend:
     depends_on:
       - model
+      - postgres
     restart: unless-stopped
     environment:
       BACKEND_WEB_ROOT: /api
+      DB_USER: backend
+      DB_DATABASE: backend
+      DB_ADDRESS: postgres
+      DB_PASSWORD_FILE: /run/secrets/postgres_password_backend
+    secrets:
+      - postgres_password_backend
 
   # Model service (ML predictions microservice)
   model:
     restart: unless-stopped
 
-  # Supabase service (Postgres, GoTrue, Supavisor, etc.)
-  # TODO
-  # db:
-  #   image: supabase/postgres:17.4.1.016
-  #   command: postgres -c config_file=/etc/postgresql/postgresql.conf
-  #   environment:
-  #     POSTGRES_PASSWORD: test
+  # Database container (Postgres)
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    volumes:
+      - ../postgres/initdb.d:/docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+      - postgres_password_backend
+
+volumes:
+  postgres:
+
+# As all the configurations are for local use only, just set the secrets here
+secrets:
+  postgres_password:
+    file: ../test_secrets/postgres_password
+  postgres_password_backend:
+    file: ../test_secrets/postgres_password_backend
