@@ -1,1 +1,12 @@
 # System-wide overrides for local development
+services:
+  backend:
+    ports:
+      - "8000:8000"
+  model:
+    ports:
+      - "8001:8000"
+  pgadmin:
+    environment:
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
