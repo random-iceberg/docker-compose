@@ -51,8 +51,8 @@
 | ID     | Title                                       | Owner(s)      | Est hrs | Acceptance Criteria                                                                 |
 | ------ | ------------------------------------------- | ------------- | ------- | ----------------------------------------------------------------------------------- |
 | **B2** | **feat/survival‑calculator‑ui** (🎯 carry‑over) | Fares, Huraira | 10      | All 8 passenger fields with validation; realtime fetch `/predict`; results shown in card; reset btn; responsive mobile layout. |
-| B3     | feat/signin-up                        | Kazi          |  5      | Sign‑up/login lazy components; email magic link; passwordless login; error handling. |
-| B5     | feat/auth‑hooks & protected‑routes          | Kazi          |  8      | React context using Supabase JS SDK; `/admin` requires login; session persisted via localStorage.                 |
+| B4     | feat/signin-up                        | Kazi          |  5      | Sign‑up/login lazy components; passwordless login; error handling. |
+| B5     | feat/auth‑hooks & protected‑routes          | Kazi          |  8      | React context using Supabase JS SDK; `/admin` requires login; session persisted via cookies.                 |
 | B6     | feat/toast‑notifications                    | Denisa        |  3      | Success/error toast component wired to API calls.                                   |
 
 ### Epic C · Backend (API)
@@ -61,7 +61,7 @@
 | ------ | --------------------------------------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------- |
 | **C2** | **feat/backend‑prediction** (🎯 carry‑over) | Denisa, Huraira |  8      | `POST /predict/` validates Pydantic; proxies to model service; returns probability; ≥ 95 % unit coverage. |
 | C4     | feat/auth‑middleware                    | Huraira        |  5      | JWT from Supabase; admin scope enforcement on `/models/*`.                                                |
-| C5     | perf/sql‑alchemy‑pool‑tuning            | Lev            |  3      | Async pool ≥ 20; compatible with pgBouncer.                                                               |
+<!-- | C5     | perf/sql‑alchemy‑pool‑tuning            | Lev            |  3      | Async pool ≥ 20; compatible with pgBouncer.                                                               | -->
 
 ### Epic D · Model Service
 
