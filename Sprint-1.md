@@ -99,7 +99,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
   - **Estimate:** 6h  
   - **Owner(s):** [Assign in GitLab] (Lev Malets @lm21363)
 
-- **Task A2: `feat/ci-cd-prod-build`** [ ]
+- **Task A2: `feat/ci-cd-prod-build`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Extend GitLab CI to auto-build Docker images for all services on each commit.
     - Validate images via container-level tests or health checks.
@@ -113,7 +113,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 ### Epic B: Frontend (React + TypeScript + Tailwind)
 
-- **Task B1: `feat/frontend-landing-marketing`** [ ]
+- **Task B1: `feat/frontend-landing-marketing`** [x]
   - **Description:**  
     - Deliver a production-grade landing page with integrated marketing content and visuals.
     - Include CTA buttons for the Survival Calculator and Admin Console.
@@ -125,7 +125,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
   - **Estimate:** 8h  
   - **Owner(s):** [Assign in GitLab] (Kazi Rahman @kr09619)
 
-- **Task B2: `feat/survival-calculator-ui`** [ ]
+- **Task B2: `feat/survival-calculator-ui`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Implement a form-based component for collecting passenger attributes (e.g., class, sex, age, fare, embarked).
     - On submit (or in real-time), call the backend to retrieve a prediction.
@@ -151,7 +151,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 ### Epic C: Backend & Core APIs (FastAPI)
 
-- **Task C2: `feat/backend-prediction`** [ ]
+- **Task C2: `feat/backend-prediction`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Develop a `POST /predict` endpoint that accepts passenger data, forwards it to the Model API, and returns structured results.
     - Validate input data thoroughly.
@@ -175,7 +175,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 ### Epic D: Model Microservice (FastAPI)
 
-- **Task D1: `feat/model-service-inference`** [ ]
+- **Task D1: `feat/model-service-inference`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Load the final Titanic ML model (e.g., Random Forest or SVM) at service startup, caching it for performance.
     - Provide a `/inference/` endpoint receiving input features and returning predictions.
@@ -187,7 +187,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
   - **Estimate:** 5h  
   - **Owner(s):** [Assign in GitLab] (Sameer Kumar @sk20179, Lev Malets @lm21363)
 
-- **Task D2: `feat/model-service-training`** [ ]
+- **Task D2: `feat/model-service-training`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Implement a `/training/` endpoint to retrain the model with the Titanic dataset.
     - Store new model artifacts (`.pkl` files) on a shared volume.
@@ -203,7 +203,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 *Note: For this sprint, user account management is deferred, but basic Supabase configuration for data storage is included.*
 
-- **Task E1: `feat/supabase-setup-complete`** [ ]
+- **Task E1: `feat/supabase-setup-complete`** [ ] (Issue still open in GitLab, but moved away from supabase)
   - **Description:**  
     - Configure Supabase (Postgres + GoTrue) in production mode.
     - Migrate or seed any required database schemas (e.g., logs or model references).
