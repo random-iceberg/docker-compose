@@ -108,7 +108,7 @@
 
 Merge requests require:
 
-* 1 ✔️ peer review · CI green · Jira/Issue reference · Conventional commit message.
+* 1 ✔️ peer review · CI green · Issue reference · Conventional commit message.
 
 ---
 
