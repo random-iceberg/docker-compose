@@ -50,15 +50,16 @@
 
 | ID     | Title                                       | Owner(s)      | Est hrs | Acceptance Criteria                                                                 |
 | ------ | ------------------------------------------- | ------------- | ------- | ----------------------------------------------------------------------------------- |
-| **B2** | **feat/survival‑calculator‑ui** (🎯 carry‑over) | Denisa, Fares | 10      | All 8 passenger fields with validation; realtime fetch `/predict`; results shown in card; reset btn; responsive mobile layout. |
-| B4     | feat/auth‑hooks & protected‑routes          | Kazi          |  8      | React context using Supabase JS SDK; `/admin` requires login; session persisted via localStorage.                 |
-| B5     | feat/toast‑notifications                    | Denisa        |  3      | Success/error toast component wired to API calls.                                   |
+| **B2** | **feat/survival‑calculator‑ui** (🎯 carry‑over) | Fares, Huraira | 10      | All 8 passenger fields with validation; realtime fetch `/predict`; results shown in card; reset btn; responsive mobile layout. |
+| B3     | feat/signin-up                        | Kazi          |  5      | Sign‑up/login lazy components; email magic link; passwordless login; error handling. |
+| B5     | feat/auth‑hooks & protected‑routes          | Kazi          |  8      | React context using Supabase JS SDK; `/admin` requires login; session persisted via localStorage.                 |
+| B6     | feat/toast‑notifications                    | Denisa        |  3      | Success/error toast component wired to API calls.                                   |
 
 ### Epic C · Backend (API)
 
 | ID     | Title                                   | Owner(s)       | Est hrs | Acceptance Criteria                                                                                       |
 | ------ | --------------------------------------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| **C2** | **feat/backend‑prediction** (🎯 carry‑over) | Fares, Huraira |  8      | `POST /predict/` validates Pydantic; proxies to model service; returns probability; ≥ 95 % unit coverage. |
+| **C2** | **feat/backend‑prediction** (🎯 carry‑over) | Denisa, Huraira |  8      | `POST /predict/` validates Pydantic; proxies to model service; returns probability; ≥ 95 % unit coverage. |
 | C4     | feat/auth‑middleware                    | Huraira        |  5      | JWT from Supabase; admin scope enforcement on `/models/*`.                                                |
 | C5     | perf/sql‑alchemy‑pool‑tuning            | Lev            |  3      | Async pool ≥ 20; compatible with pgBouncer.                                                               |
 
@@ -66,8 +67,8 @@
 
 | ID     | Title                                     | Owner(s)  | Est hrs | Acceptance Criteria                                                        |
 | ------ | ----------------------------------------- | ------ | ------- | -------------------------------------------------------------------------- |
-| **D1** | feat/model‑service‑inference (carry‑over) | Sameer |  6      | Load RF model once; `/inference` returns float prob p95 < 150 ms (local).  |
-| **D2** | feat/model‑service‑training (carry‑over)  | Sameer |  7      | Async background training; persist `.pkl`; accuracy ≥ 0.79; emits progress logs. |
+| **D1** | **feat/model‑service‑inference** (🎯 carry‑over) | Sameer |  6      | Load RF model once; `/inference` returns float prob p95 < 150 ms (local).  |
+| **D2** | **feat/model‑service‑training** (🎯 carry‑over)  | Sameer |  7      | Async background training; persist `.pkl`; accuracy ≥ 0.79; emits progress logs. |
 | D3     | chore/model‑registry‑schema               | Lev    |  4      | Alembic migration for `model` & `feature` tables finalized; add FK indexes.                 |
 
 ### Epic E · Auth & DB
