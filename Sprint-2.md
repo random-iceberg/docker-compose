@@ -20,6 +20,14 @@ Finalize the MVP and deliver a **complete, production-ready version** of the Tit
 
 **Key Deliverables:**
 
+## 2. Sprint Objectives
+
+Draft 0:
+- Let Denisa and Fares finish working on the frontend pages and the backend prediction logic. (aka. B2 and C2)
+- Due to Sameer being busy with his other project, he will have to work double time to finish the model microservice epics. (aka. D1 and D2)
+- Let Kazi work on the login and signup pages. Maybe even setup the authentication flow.
+- Have Huraira revise and improve the once finished B2 and C2.
+- Have Lev work on A2, as the professor has just released `cicdtoken`.
 
 ---
 <!-- 
