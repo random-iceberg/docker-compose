@@ -1,134 +1,170 @@
-# Sprint 2 – Production Hardening & Authentication
+---
+title: Sprint 2 – Production Hardening & Authentication (RC-1)
+revision: v2-final · 08 May 2025
+---
 
-**Sprint Duration:** 2 Weeks · **May 6 – May 20 2025**  
-**Velocity Capacity:** 5 dev‑hrs/week/person × 2 weeks × 7 members = **70 hrs**
-
-| Role                    | Team Member              | Allocation (hrs) |
-| ----------------------- | ------------------------ | ---------------- |
-| Lead Dev / PM           | **Alex**                 |  10              |
-| Full‑stack Dev          | Denisa‑Iulia V. @dv11079 |  10              |
-| Full‑stack Dev          | Fares E. @fe18597        |  10              |
-| Full‑stack Dev          | Huraira A. @ha06705      |  10              |
-| Full‑stack Dev          | Kazi R. @kr09619         |  10              |
-| Backend + ML Specialist | Lev M. @lm21363          |  10              |
-| Backend + ML Specialist | Sameer K. @sk20179       |  10              |
+> **Context**  
+> *Sprint 1 delivered a containerised MVP that demos live predictions and basic
+> model management, but is still running in “open‐house” mode with placeholder
+> ML code, no user accounts, and minimal observability.  
+> Sprint 2 converts the MVP into a **Release Candidate 1** (RC-1) that anyone
+> can deploy with a single `docker compose up --build -d` and use securely in
+> production.*
 
 ---
 
-## 1 · Sprint Goal
+## 1 · Sprint time-box & velocity
 
-> **Deliver a production‑ready release candidate (RC‑1) that implements backend‑driven user authentication (signup/login), completes all unfinished MVP epics (including the now‑finished Survival Calculator), and hardens the stack for observability, performance, and maintainability.**  
-> RC‑1 must deploy with **one** `docker compose up --build -d` on Ubuntu 24.04, pass CI/CD, and satisfy acceptance criteria from the Project Charter.
+| - Role - | Member | Allocation<sub>hrs/2 w</sub> |
+| -------- | ------ | ----------------------------- |
+| **Lead Dev / PM** | **Alex** | 10 |
+| Full-stack Dev | Denisa @dv11079 | 10 |
+| Full-stack Dev | Fares @fe18597 | 10 |
+| Full-stack Dev | Huraira @ha06705 | 10 |
+| Full-stack Dev | Kazi @kr09619 | 15 |
+| Back-end & ML | Lev @lm21363 | 10 |
+| Back-end & ML | Sameer @sk20179 | 10 |
 
----
+*Capacity = **75 h** (5 h above nominal 70 h, absorbed by Kazi’s extra time).*
 
-## 2 · Key Objectives
-
-1. **Backend‑Native Authentication & Account Management**  
-   Replace Supabase container with FastAPI‑based signup/login endpoints using JWT; secure `/admin` and user‑scoped routes.
-2. **Finalize Remaining Sprint 1 Epics**  
-   Ensure Survival Calculator UI (now done), Prediction API, Model Inference & Training endpoints, and CI/CD image push are all production‑grade.
-3. **Observability & Performance**  
-   Add structured logging, Prometheus metrics, health‑check dashboards; verify model inference p95 < 150 ms.
-4. **E2E Testing & QA Hardening**  
-   Achieve ≥ 80 % unit‑/integration‑coverage and green nightly Playwright suite.
-5. **Documentation & Release Assets**  
-   Freeze architecture docs, update all READMEs, and prepare release notes & demo script for Sprint Review.
+**Sprint window** 08 May → 22 May 2025 (10 calendar days, 2 full working weeks)  
 
 ---
 
-## 3 · Epics & Task Break‑down
+## 2 · Sprint Goal (definition of success)
 
-### Epic A · CI/CD, Container Registry & GitLab
+> Deliver **RC-1** that  
+> 1️. authenticates real users (JWT) and locks down admin/model routes,  
+> 2️. completes inference + training flows with persisted models,  
+> 3️. ships full CI/CD (build → test → push-to-registry → compose-up smoke-test),  
+> 4️. exposes health & Prometheus metrics for every service, and  
+> 5️. passes automated unit + integration + Playwright E2E suites (≥ 80 % cov).  
 
-| ID     | Title                                 | Owner(s) | Est hrs | Acceptance Criteria                                                                       |
-| ------ | ------------------------------------- | -------- | ------- | ----------------------------------------------------------------------------------------- |
-| **A2** | feat/ci‑cd‑prod‑build (🎯 carry‑over) | Lev      |  6      | Build & push frontend/backend/model images; pipeline blocks on health‑tests; tags `rc‑1`. |
-| A3     | chore/auto‑semantic‑versioning        | Lev      |  3      | Conventional‑commits drive version tag; changelog.md auto‑generated.                      |
-
-### Epic B · Frontend (UI / UX)
-
-| ID     | Title                                       | Owner(s)      | Est hrs | Acceptance Criteria                                                                 |
-| ------ | ------------------------------------------- | ------------- | ------- | ----------------------------------------------------------------------------------- |
-| **B2** | feat/survival‑calculator‑ui (🎯 done)       | Fares, Huraira | 0       | _Completed in Sprint 1._                                                           |
-| B4     | feat/signin-up                              | Kazi          |  5      | Signup/login components; form validations; API integration to backend endpoints.    |
-| B5     | feat/auth‑hooks & protected‑routes          | Kazi          |  8      | React context + custom hooks for JWT; `/admin` route guarded; session persisted.    |
-| B6     | feat/toast‑notifications                    | Kazi          |  3      | Reusable toast component; wired to all success/error responses.                     |
-
-### Epic C · Backend (API)
-
-| ID     | Title                                   | Owner(s)        | Est hrs | Acceptance Criteria                                                                                       |
-| ------ | --------------------------------------- | --------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| **C2** | feat/backend‑prediction (🎯 carry‑over) | Denisa, Huraira |  8      | _Completed in Sprint 1._     |
-| C4     | feat/auth‑middleware                    | Huraira         |  5      | Extract & verify JWT; enforce `admin` role on `/models/*` and other protected routes.                    |
-
-### Epic D · Model Service
-
-| ID     | Title                                     | Owner(s)  | Est hrs | Acceptance Criteria                                                        |
-| ------ | ----------------------------------------- | --------- | ------- | -------------------------------------------------------------------------- |
-| **D1** | feat/model‑service‑inference (🎯 carry‑over) | Sameer    |  6      | Load RF model once; `/inference` returns float prob p95 < 150 ms (local).  |
-| **D2** | feat/model‑service‑training (🎯 carry‑over)  | Sameer    |  7      | Async background training; persist `.pkl`; accuracy ≥ 0.79; emits progress logs. |
-| D3     | chore/model‑registry‑schema               | Lev       |  4      | Alembic migration for `model` & `feature` tables finalized; add FK indexes. |
-
-### Epic E · Backend Authentication & User Schema
-
-| ID     | Title                                        | Owner(s) | Est hrs | Acceptance Criteria                                                             |
-| ------ | -------------------------------------------- | -------- | ------- | ------------------------------------------------------------------------------- |
-| **E1** | feat/backend‑auth‑implementation             | Kazi     |  8      | FastAPI endpoints for `POST /signup` and `POST /login`; issue JWT; store users in DB. |
-| E2     | feat/db‑user‑schema & seed                   | Lev      |  2      | Add `users` table via Alembic; seed admin account in init script.               |
-
-### Epic F · QA, Testing & Docs
-
-| ID | Title                     | Owner(s)     | Est hrs | Acceptance Criteria                                                                   |
-| -- | ------------------------- | ------------ | ------- | ------------------------------------------------------------------------------------- |
-| F1 | test/unit‑integration‑e2e | Alex, All    | 10      | Frontend RTL, backend pytest, model pytest; Playwright E2E for core flows; coverage ≥ 80 %. |
-| F2 | docs/finalize‑rc‑1        | Alex         |  4      | All READMEs & `docs/` updated; architecture diagrams refreshed; sprint review deck ready. |
-
-**Total estimated hrs:** **70** (within sprint capacity)
+The stack must spin up on **Ubuntu 24.04** with **zero manual config**, meet all
+project requirements, and be demo-ready for stakeholders.
 
 ---
 
-## 4 · Definition of Done (Sprint 2)
+## 3 · High-level objectives
 
-* RC‑1 builds & deploys with **zero manual configuration** on Ubuntu 24.04.  
-* FastAPI‐driven signup/login work; `/admin` and protected routes require valid JWT.  
-* Survival Calculator remains < 150 ms p95 (local).  
-* Admin console lists, trains, deletes models via secured API.  
-* CI/CD pushes signed images to GitLab registry; nightly E2E green.  
-* Coverage ≥ 80 %; docs & diagrams match implementation.  
-* All epics closed in GitLab with peer review & green pipeline.
-
----
-
-## 5 · Workflow & Ceremonies
-
-* **Stand‑ups:** Tue & Fri 16:00 CET · 15–30 min.  
-* **Backlog Grooming:** Wed 17:00 CET.  
-* **Sprint Review + Retro:** Tue May 20 16:00 CET.
-
-Merge requests require:
-
-* 1 ✔️ peer review · CI green · Issue reference · Conventional commit message.
+1. **Secure the platform** – add signup / login, hashed passwords, JWT middleware, and route-level RBAC (`admin`, `user`, `anon`).
+2. **Finish model micro-service** – fast inference (< 150 ms p95 locally) and asynchronous training with Scikit-learn RF/SVM persisted under `/models`.
+3. **CI/CD hardening** – semantic-versioned image tags, container registry
+   pruning, and a one-shot “spin-up → smoke-test” stage that blocks merge.
+4. **Observability & performance** – structured JSON logs, `/metrics`
+   (Prometheus) & `/health` endpoints, Grafana dashboard bundle.
+5. **Front-end polish** – protected routes, auth context, persistent tokens,
+   toast notifications, and UX tweaks from Sprint-1 retro.
+6. **Quality Gate** – unit + integration coverage ≥ 80 % (Back-end, Model, FE);
+   green nightly Playwright run against Compose.
+7. **Docs** – freeze architecture diagrams and publish RC-1 deployment guide.
 
 ---
 
-## 6 · Risks & Mitigations
+## 4 · Work-break-down structure
 
-| Risk                         | Likelihood | Impact | Mitigation                                                            |
-| ---------------------------- | ---------- | ------ | --------------------------------------------------------------------- |
-| Auth‑implementation delays   | M          | H      | Start backend auth spike immediately; fallback to mocked JWT flow.    |
-| Model training time > 10 min | M          | M      | Run training async; return immediate 202 and emit progress logs.      |
-| Pipeline registry quota      | L          | M      | Retain only last 3 image tags; nightly cleanup job.                   |
+### Epic A · CI/CD & container registry
+
+| ID | Task | Owner | Est h | Acceptance-criteria |
+|----|------|-------|-------|---------------------|
+| **A1** | **`feat/ci-pipeline-prod-build`** (⚠ carry-over) | Lev | 6 | GitLab pipeline builds & pushes signed images (`frontend`,`backend`,`model`) on **every** commit; tag pattern `v<semver>`; fails on health-check. |
+| A2 | `chore/semantic-changelog` | Lev | 3 | Conventional‐commit → automatic CHANGELOG.md & Git tag; keep only last **3** RC images. |
+
+### Epic B · Authentication (FE + BE)
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| **B1** | **`feat/backend-auth-core`** | Kazi | 6 | FastAPI endpoints `POST /signup`, `/login` (bcrypt, JWT 1 h TTL); proper 409/401 errors. |
+| B2 | `feat/db-user-schema` | Lev | 2 | Alembic migration adds `user(id, email, pw_hash, role, created_at)`; seeds admin user from env. |
+| B3 | `feat/jwt-middleware-rbac` | Huraira | 4 | Dependency that verifies JWT & injects `user.role`; 403 on protected routes if insufficient. |
+| B4 | `feat/frontend-auth-hooks` | Kazi | 8 | React context storing JWT + refresh; guards `/admin` & model CRUD routes; persists in `localStorage`. |
+| B5 | `feat/toast-notifications` | Lev | 3 | Reusable Tailwind toast; used for login/logout, errors, success. |
+
+### Epic C · Model micro-service
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| **C1** | **`feat/inference-endpoint`** (⚠ carry-over) | Sameer | 6 | Loads RF at startup, `/inference` returns `{"prob": float,"survived": bool}`; p95 < 150 ms (loc). |
+| **C2** | **`feat/training-endpoint`** (⚠ carry-over) | Sameer | 7 | `/training` accepts JSON `{algorithm,features,name}`; async task trains, persists `.pkl`, updates Postgres (`model` & link table); returns `202 Accepted {job_id}`. |
+| C3 | `chore/model-registry-migration` | Lev | 4 | Finish `model`,`feature`,`model_feature_link` migrations; add index on `(uuid)` and FK cascades. |
+
+### Epic D · Back-end API upgrades
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| D1 | `feat/prometheus-metrics` | Fares | 4 | `fastapi_prometheus` middleware; metrics at `/metrics`; instrument inference latency & HTTP codes. |
+| D2 | `feat/structured-logging` | Denisa | 3 | `loguru` JSON logs; log correlation ID from JWT. |
+
+### Epic E · Front-end polish
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| E1 | `ui/calculator-validation-tweaks` | Denisa | 4 | Inline validation messages; numeric spinners; mobile layout gap fixes. |
+| E2 | `ui/admin-table-pagination` | Kazi | 2 | Show 10 models / page, client-side pagination. |
+
+### Epic F · Testing & Quality Gate
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| F1 | `test/backend-auth-coverage` | Alex | 4 | pytest for signup/login, RBAC, 100 % branch on auth module. |
+| F2 | `test/model-service` | Sameer | 3 | pytest on inference happy-path & invalid input. |
+| F3 | `test/playwright-e2e` | Alex + FE team | 6 | Login → predict → admin train/delete flow; run headless in CI; store artefacts on failure. |
+| F4 | `ci/coverage-gate` | Lev | 2 | Pipeline fails if global cov < 80 %. |
+
+### Epic G · Documentation & Release
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| G1 | `docs/architecture-update` | Alex | 3 | Update Mermaid diagram (`docs/Project-Charter.md`, section 5). |
+| G2 | `docs/rc1-deployment-guide` | Alex | 1 | Step-by-step: clone → `git submodule update --init --recursive` → `docker compose up --build -d`. |
+| G3 | `slide-deck-sprint2-review` | All | 2 | 10-min demo script + 3 key metrics slides. |
+
+*Total planned effort = **75 h** (matches capacity).*
 
 ---
 
-## 7 · Sprint Review Checklist
+## 5 · Definition of Done (DoD for RC-1)
 
-* [ ] RC‑1 live demo: signup → login → predict → admin train/delete model.  
-* [ ] Performance report: inference latency metrics; health checks pass.  
-* [ ] CI/CD dashboard: build, test, deploy stages all green.  
-* [ ] Documentation walk‑through: READMEs, diagrams, and release notes.
+| Area | DoD criterion |
+|------|---------------|
+| **Deployment** | Fresh Ubuntu 24.04 VM → `docker compose up --build -d` → all containers healthy; FE at <http://localhost:8080>. |
+| **Security** | Signup/login issues JWT; `/admin/*`, `/models/*`, `/training/*` require `role=admin`; password hashed with bcrypt&nbsp;12. |
+| **Model** | RF & SVM pickles stored in volume `model-artifacts`; inference p95 < 150 ms; training job persists metadata and returns accuracy. |
+| **Observability** | `/metrics` exposed on each service; Grafana dashboard `services_overview.json` committed in `docs/`. |
+| **Quality** | Unit + integration coverage ≥ 80 %; nightly Playwright suite green; pipeline blocks on regression. |
+| **CI/CD** | Images tagged `vX.Y.Z[-rcN]`; pushed to GitLab Container Registry; “smoke-up” stage runs `docker compose up` inside CI and hits `/health`. |
+| **Docs** | All READMEs and `docs/` sections accurate; architecture diagram dated **22 May 2025**; CHANGELOG lists RC-1. |
 
 ---
 
-*Prepared by **team/random\_iceberg** · updated May 8 2025*
+## 6 · Risks & mitigation
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|-----------|
+| Auth scope creep (refresh tokens, password reset) | M | M | Ship **MVP auth** (JWT + bcrypt) only; backlog extras for Sprint 3. |
+| Training job exceeds CI time-outs | M | H | Run training **async**; CI only unit-tests training pipeline; nightly job does full train. |
+| Image registry quota exceeded | L | M | Retain last 3 RC images; cron cleanup (`registry-retention.yml`). |
+| Metric stack adds memory overhead | L | L | Use `prom/prometheus:v2-alpine`, scrap every 30 s; set 256 MiB limit. |
+
+---
+
+## 7 · Ceremonies
+
+* **Stand-ups:** Tue + Fri 16 : 00 CEST (15 min)  
+* **Backlog refinement:** Wed 17 : 00 CEST  
+* **Sprint review + retro:** Thu 22 May 16 : 00 CEST
+
+Merge policy: ≥ 1 peer LGTM + green CI + linked issue + conventional commit.
+
+---
+
+## 8 · Sprint-review checklist
+
+- [ ] Live demo (sign-up → login → predict → admin train/delete).  
+- [ ] Metrics dashboard shows <150 ms inference & <5 % error-rate.  
+- [ ] CI pipeline summary: build, test, publish, smoke-up all green.  
+- [ ] CHANGELOG & docs updated → tag **`v0.9.0-rc1`**.  
+
+---
+
+*Prepared by **team/random_iceberg** · Approved 08 May 2025*

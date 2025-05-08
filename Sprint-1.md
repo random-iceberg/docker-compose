@@ -125,7 +125,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
   - **Estimate:** 8h  
   - **Owner(s):** [Assign in GitLab] (Kazi Rahman @kr09619)
 
-- **Task B2: `feat/survival-calculator-ui`** [ ] (Issue still open in GitLab)
+- **Task B2: `feat/survival-calculator-ui`** [x]
   - **Description:**  
     - Implement a form-based component for collecting passenger attributes (e.g., class, sex, age, fare, embarked).
     - On submit (or in real-time), call the backend to retrieve a prediction.
@@ -151,7 +151,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 ### Epic C: Backend & Core APIs (FastAPI)
 
-- **Task C2: `feat/backend-prediction`** [ ] (Issue still open in GitLab)
+- **Task C2: `feat/backend-prediction`** [x]
   - **Description:**  
     - Develop a `POST /predict` endpoint that accepts passenger data, forwards it to the Model API, and returns structured results.
     - Validate input data thoroughly.
