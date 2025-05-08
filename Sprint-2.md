@@ -68,56 +68,56 @@ project requirements, and be demo-ready for stakeholders.
 | ID | Task | Owner | Est h | Acceptance-criteria |
 |----|------|-------|-------|---------------------|
 | **A1** | **`feat/ci-pipeline-prod-build`** (⚠ carry-over) | Lev | 6 | GitLab pipeline builds & pushes signed images (`frontend`,`backend`,`model`) on **every** commit; tag pattern `v<semver>`; fails on health-check. |
-| A2 | `chore/semantic-changelog` | Lev | 3 | Conventional‐commit → automatic CHANGELOG.md & Git tag; keep only last **3** RC images. |
+| A3 | `chore/semantic-changelog` | Lev | 3 | Conventional‐commit → automatic CHANGELOG.md & Git tag; keep only last **3** RC images. |
 
 ### Epic B · Authentication (FE + BE)
 
 | ID | Task | Owner | Est h | Acceptance criteria |
 |----|------|-------|-------|---------------------|
-| **B1** | **`feat/backend-auth-core`** | Kazi | 6 | FastAPI endpoints `POST /signup`, `/login` (bcrypt, JWT 1 h TTL); proper 409/401 errors. |
-| B2 | `feat/db-user-schema` | Lev | 2 | Alembic migration adds `user(id, email, pw_hash, role, created_at)`; seeds admin user from env. |
-| B3 | `feat/jwt-middleware-rbac` | Huraira | 4 | Dependency that verifies JWT & injects `user.role`; 403 on protected routes if insufficient. |
-| B4 | `feat/frontend-auth-hooks` | Kazi | 8 | React context storing JWT + refresh; guards `/admin` & model CRUD routes; persists in `localStorage`. |
-| B5 | `feat/toast-notifications` | Lev | 3 | Reusable Tailwind toast; used for login/logout, errors, success. |
+| **B4** | **`feat/backend-auth-core`** | Kazi | 6 | FastAPI endpoints `POST /signup`, `/login` (bcrypt, JWT 1 h TTL); proper 409/401 errors. |
+| B5 | `feat/db-user-schema` | Lev | 2 | Alembic migration adds `user(id, email, pw_hash, role, created_at)`; seeds admin user from env. |
+| B6 | `feat/jwt-middleware-rbac` | Huraira | 4 | Dependency that verifies JWT & injects `user.role`; 403 on protected routes if insufficient. |
+| B7 | `feat/frontend-auth-hooks` | Kazi | 8 | React context storing JWT + refresh; guards `/admin` & model CRUD routes; persists in `localStorage`. |
+| B8 | `feat/toast-notifications` | Lev | 3 | Reusable Tailwind toast; used for login/logout, errors, success. |
 
-### Epic C · Model micro-service
-
-| ID | Task | Owner | Est h | Acceptance criteria |
-|----|------|-------|-------|---------------------|
-| **C1** | **`feat/inference-endpoint`** (⚠ carry-over) | Sameer | 6 | Loads RF at startup, `/inference` returns `{"prob": float,"survived": bool}`; p95 < 150 ms (loc). |
-| **C2** | **`feat/training-endpoint`** (⚠ carry-over) | Sameer | 7 | `/training` accepts JSON `{algorithm,features,name}`; async task trains, persists `.pkl`, updates Postgres (`model` & link table); returns `202 Accepted {job_id}`. |
-| C3 | `chore/model-registry-migration` | Lev | 4 | Finish `model`,`feature`,`model_feature_link` migrations; add index on `(uuid)` and FK cascades. |
-
-### Epic D · Back-end API upgrades
+### Epic C · Back-end API upgrades
 
 | ID | Task | Owner | Est h | Acceptance criteria |
 |----|------|-------|-------|---------------------|
-| D1 | `feat/prometheus-metrics` | Fares | 4 | `fastapi_prometheus` middleware; metrics at `/metrics`; instrument inference latency & HTTP codes. |
-| D2 | `feat/structured-logging` | Denisa | 3 | `loguru` JSON logs; log correlation ID from JWT. |
+| C3 | `feat/prometheus-metrics` | Fares | 4 | `fastapi_prometheus` middleware; metrics at `/metrics`; instrument inference latency & HTTP codes. |
+| C4 | `feat/structured-logging` | Denisa | 3 | `loguru` JSON logs; log correlation ID from JWT. |
 
-### Epic E · Front-end polish
-
-| ID | Task | Owner | Est h | Acceptance criteria |
-|----|------|-------|-------|---------------------|
-| E1 | `ui/calculator-validation-tweaks` | Denisa | 4 | Inline validation messages; numeric spinners; mobile layout gap fixes. |
-| E2 | `ui/admin-table-pagination` | Kazi | 2 | Show 10 models / page, client-side pagination. |
-
-### Epic F · Testing & Quality Gate
+### Epic D · Model micro-service
 
 | ID | Task | Owner | Est h | Acceptance criteria |
 |----|------|-------|-------|---------------------|
-| F1 | `test/backend-auth-coverage` | Alex | 4 | pytest for signup/login, RBAC, 100 % branch on auth module. |
-| F2 | `test/model-service` | Sameer | 3 | pytest on inference happy-path & invalid input. |
-| F3 | `test/playwright-e2e` | Alex + FE team | 6 | Login → predict → admin train/delete flow; run headless in CI; store artefacts on failure. |
-| F4 | `ci/coverage-gate` | Lev | 2 | Pipeline fails if global cov < 80 %. |
+| **D1** | **`feat/inference-endpoint`** (⚠ carry-over) | Sameer | 6 | Loads RF at startup, `/inference` returns `{"prob": float,"survived": bool}`; p95 < 150 ms (loc). |
+| **D2** | **`feat/training-endpoint`** (⚠ carry-over) | Sameer | 7 | `/training` accepts JSON `{algorithm,features,name}`; async task trains, persists `.pkl`, updates Postgres (`model` & link table); returns `202 Accepted {job_id}`. |
+| D3 | `chore/model-registry-migration` | Lev | 4 | Finish `model`,`feature`,`model_feature_link` migrations; add index on `(uuid)` and FK cascades. |
 
-### Epic G · Documentation & Release
+### Epic F · Front-end polish
 
 | ID | Task | Owner | Est h | Acceptance criteria |
 |----|------|-------|-------|---------------------|
-| G1 | `docs/architecture-update` | Alex | 3 | Update Mermaid diagram (`docs/Project-Charter.md`, section 5). |
-| G2 | `docs/rc1-deployment-guide` | Alex | 1 | Step-by-step: clone → `git submodule update --init --recursive` → `docker compose up --build -d`. |
-| G3 | `slide-deck-sprint2-review` | All | 2 | 10-min demo script + 3 key metrics slides. |
+| F1 | `ui/calculator-validation-tweaks` | Denisa | 4 | Inline validation messages; numeric spinners; mobile layout gap fixes. |
+| F2 | `ui/admin-table-pagination` | Kazi | 2 | Show 10 models / page, client-side pagination. |
+
+### Epic G · Testing & Quality Gate
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| G1 | `test/backend-auth-coverage` | Alex | 4 | pytest for signup/login, RBAC, 100 % branch on auth module. |
+| G2 | `test/model-service` | Sameer | 3 | pytest on inference happy-path & invalid input. |
+| G3 | `test/playwright-e2e` | Alex + FE team | 6 | Login → predict → admin train/delete flow; run headless in CI; store artefacts on failure. |
+| G4 | `ci/coverage-gate` | Lev | 2 | Pipeline fails if global cov < 80 %. |
+
+### Epic H · Documentation & Release
+
+| ID | Task | Owner | Est h | Acceptance criteria |
+|----|------|-------|-------|---------------------|
+| H1 | `docs/architecture-update` | Alex | 3 | Update Mermaid diagram (`docs/Project-Charter.md`, section 5). |
+| H2 | `docs/rc1-deployment-guide` | Alex | 1 | Step-by-step: clone → `git submodule update --init --recursive` → `docker compose up --build -d`. |
+| H3 | `slide-deck-sprint2-review` | All | 2 | 10-min demo script + 3 key metrics slides. |
 
 *Total planned effort = **75 h** (matches capacity).*
 
