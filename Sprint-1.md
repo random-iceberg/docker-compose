@@ -87,7 +87,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
 
 ### Epic A: Production Docker & Environment Setup
 
-- **Task A1: `feat/docker-compose-setup`**  
+- **Task A1: `feat/docker-compose-setup`** [x]
   - **Description:**  
     - Finalize the multi-service Docker Compose configuration for frontend, backend, model, and Supabase (data storage only).
     - Eliminate `.env` usage; define required environment variables directly in the Compose file.
@@ -97,9 +97,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Inter-container communication (e.g., backend ↔ model) is reliable.
     3. The application is reachable at `http://localhost:3000/` without manual config steps.
   - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Lev Malets @lm21363)
 
-- **Task A2: `feat/ci-cd-prod-build`**  
+- **Task A2: `feat/ci-cd-prod-build`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Extend GitLab CI to auto-build Docker images for all services on each commit.
     - Validate images via container-level tests or health checks.
@@ -109,11 +109,11 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Automated container health checks pass.
     3. Merge requests are blocked if pipelines fail.
   - **Estimate:** 5h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Lev Malets @lm21363)
 
 ### Epic B: Frontend (React + TypeScript + Tailwind)
 
-- **Task B1: `feat/frontend-landing-marketing`**  
+- **Task B1: `feat/frontend-landing-marketing`** [x]
   - **Description:**  
     - Deliver a production-grade landing page with integrated marketing content and visuals.
     - Include CTA buttons for the Survival Calculator and Admin Console.
@@ -123,9 +123,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. The layout is responsive on desktop and mobile.
     3. Users can easily navigate to the Survival Calculator and Admin Console.
   - **Estimate:** 8h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Kazi Rahman @kr09619)
 
-- **Task B2: `feat/survival-calculator-ui`**  
+- **Task B2: `feat/survival-calculator-ui`** [x]
   - **Description:**  
     - Implement a form-based component for collecting passenger attributes (e.g., class, sex, age, fare, embarked).
     - On submit (or in real-time), call the backend to retrieve a prediction.
@@ -135,9 +135,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Prediction results are displayed clearly (e.g., success/failure alerts or probabilities).
     3. Errors are handled gracefully with descriptive user feedback.
   - **Estimate:** 8h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Denisa-Iulia Vaidasigan @dv11079, Fares Elbermawy @fe18597)
 
-- **Task B3: `feat/admin-console-frontend`**  
+- **Task B3: `feat/admin-console-frontend`** [x]
   - **Description:**  
     - Create an Admin Console UI showing a list of models (e.g., name, date trained, accuracy).
     - Allow “Train Model” or “Delete Model” actions (calling backend endpoints).
@@ -147,11 +147,11 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. “Train Model” or “Delete Model” triggers backend endpoints successfully.
     3. The interface is intuitive and responsive.
   - **Estimate:** 8h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Huraira Ali @ha06705)
 
 ### Epic C: Backend & Core APIs (FastAPI)
 
-- **Task C2: `feat/backend-prediction`**  
+- **Task C2: `feat/backend-prediction`** [x]
   - **Description:**  
     - Develop a `POST /predict` endpoint that accepts passenger data, forwards it to the Model API, and returns structured results.
     - Validate input data thoroughly.
@@ -161,9 +161,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Invalid or missing data triggers an HTTP 400 with a descriptive message.
     3. All prediction requests are logged for future auditing.
   - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Fares Elbermawy @fe18597, Denisa-Iulia Vaidasigan @dv11079)
 
-- **Task C3: `feat/backend-admin-endpoints`**  
+- **Task C3: `feat/backend-admin-endpoints`** [x]
   - **Description:**  
     - Add endpoints to list models (`GET /models`), initiate training (`POST /models/train`), and delete models (`DELETE /models/{id}`).
     - No authentication is required for this MVP.
@@ -171,11 +171,11 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     1. All endpoints return standard JSON and update underlying data (model artifacts) as expected.
     2. Responses are logged for auditing.
   - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Huraira Ali @ha06705)
 
 ### Epic D: Model Microservice (FastAPI)
 
-- **Task D1: `feat/model-service-inference`**  
+- **Task D1: `feat/model-service-inference`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Load the final Titanic ML model (e.g., Random Forest or SVM) at service startup, caching it for performance.
     - Provide a `/inference/` endpoint receiving input features and returning predictions.
@@ -185,9 +185,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. The inference endpoint returns numeric probabilities or classification results.
     3. Logs detail each inference request for traceability.
   - **Estimate:** 5h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Sameer Kumar @sk20179, Lev Malets @lm21363)
 
-- **Task D2: `feat/model-service-training`**  
+- **Task D2: `feat/model-service-training`** [ ] (Issue still open in GitLab)
   - **Description:**  
     - Implement a `/training/` endpoint to retrain the model with the Titanic dataset.
     - Store new model artifacts (`.pkl` files) on a shared volume.
@@ -197,13 +197,13 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Newly trained model artifacts are saved correctly and can replace or supplement existing ones.
     3. The endpoint returns a status message and (optionally) relevant metrics (e.g., “accuracy: 0.85”).
   - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Sameer Kumar @sk20179, Lev Malets @lm21363)
 
 ### Epic E: Supabase Integration & Data Persistence
 
 *Note: For this sprint, user account management is deferred, but basic Supabase configuration for data storage is included.*
 
-- **Task E1: `feat/supabase-setup-complete`**  
+- **Task E1: `feat/supabase-setup-complete`** [ ] (Issue still open in GitLab, but moved away from supabase)
   - **Description:**  
     - Configure Supabase (Postgres + GoTrue) in production mode.
     - Migrate or seed any required database schemas (e.g., logs or model references).
@@ -213,9 +213,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. The backend can create/read/update relevant data and logs.
     3. Any roles or privileges are set appropriately (if needed).
   - **Estimate:** 5h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Lev Malets @lm21363)
 
-- **Task E2: `feat/production-db-handlers`**  
+- **Task E2: `feat/production-db-handlers`** [x]
   - **Description:**  
     - Implement stable database operations for storing predictions, logs, or admin events.
     - Use transactions and handle potential DB failures gracefully.
@@ -224,9 +224,9 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. Database errors produce clear error messages and logs.
     3. CI tests confirm successful migrations or queries.
   - **Estimate:** 5h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] (Lev Malets @lm21363)
 
-### Epic F: Final Testing & Documentation
+<!-- ### Epic F: Final Testing & Documentation
 
 - **Task F1: `test/unit-integration-e2e`**  
   - **Description:**  
@@ -238,7 +238,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. CI pipelines block merges if any test fails.
     3. E2E tests pass on the core user journeys.
   - **Estimate:** 6h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] 
 
 - **Task F2: `docs/finalize-mvp`**  
   - **Description:**  
@@ -249,7 +249,7 @@ All tasks below must be completed for a production-ready MVP. Each task should m
     2. A new developer can deploy and test the MVP end to end with the provided instructions.
     3. Documentation accurately represents the final state of the MVP.
   - **Estimate:** 4h  
-  - **Owner(s):** [Assign in GitLab]
+  - **Owner(s):** [Assign in GitLab] -->
 
 ---
 
