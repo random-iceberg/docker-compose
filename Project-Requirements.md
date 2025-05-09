@@ -210,3 +210,97 @@ Your task is to develop a web application powered by artificial intelligence to 
 ---
 
 *Note: This document was extracted from a PDF and later formatted by ChatGPT. No changes were made to the original content.*
+
+---
+
+## ✔️ Grand Checklist
+
+### Functional Requirements
+- [ ] **Landing Page**  
+  - [x] Short explanation of app purpose  
+  - [x] Navigation links to Home, Calculator, Admin, Advertisement  
+  - [ ] Responsive layout on desktop and mobile  
+
+- [ ] **User Account**  
+  - [ ] Sign‑up with email & password (securely hashed)  
+  - [ ] Login / logout flows with JWT  
+  - [ ] Appropriate 401/409 error responses  
+
+- [ ] **Advertisement Page**  
+  - [ ] Marketing narrative and visuals in place  
+  - [ ] Clear calls‑to‑action to demo and course enrollment  
+
+- [ ] **Survival Calculator**  
+  - [ ] All inputs present & validated:  
+    - Class (1/2/3), Sex (male/female), Age (0–100), Fare (0–500),  
+    - Embarked (C/Q/S), Title, Were Alone, Cabin Known  
+  - [ ] Inline field explanations  
+  - [ ] Live prediction update on any input change  
+  - [ ] Reset button clears all inputs  
+  - [ ] Model selection works:  
+    - Anonymous: choose exactly one of {Random Forest, SVM}  
+    - Authenticated: any combination of available models  
+  - [ ] Display “Survived” / “Did Not Survive” per model  
+  - [ ] Persist last 10 predictions for logged‑in users  
+
+- [x] **Admin Console**  
+  - [x] List all trained models with name, algorithm, features, accuracy, date  
+  - [x] Delete existing models  
+  - [x] Train new models by selecting features and naming them  
+  - [x] Newly trained models appear immediately in Calculator  
+
+---
+
+### Non‑Functional Requirements
+
+#### Architecture & Containerization
+- [X] Four services containerized:  
+  Web Frontend, Web Backend, Model Backend, Database (Postgres + GoTrue)  
+- [x] Single `docker-compose.yml` orchestrates all services  
+- [x] Reverse proxy (Nginx/Caddy/Traefik) routes traffic and serves static assets  
+- [x] Persistent volumes for Postgres data and model artifacts  
+- [x] Zero manual configuration—no local `.env` edits required  
+- [x] App accessible at `http://localhost:8080` after `docker-compose up --build -d`
+
+#### CI/CD & Testing
+- [ ] GitLab CI builds and pushes Docker images for all services on every commit  
+- [ ] Unit & integration tests for Python and TypeScript run on each commit  
+- [ ] Nightly end‑to‑end tests (Cypress or Playwright) against the full stack  
+- [ ] Coverage gate: pipeline fails if overall coverage < 80 %
+
+---
+
+### Frontend (React + TypeScript)
+- [ ] SPA implemented with React & TypeScript  
+- [ ] Tailwind CSS for responsive styling  
+- [ ] Works in Chrome ≥ 119, Firefox ≥ 122, Safari ≥ 16.1  
+- [ ] Component tests with Jest / React Testing Library  
+- [ ] End‑to‑end tests for core user flows  
+
+### Web Backend (FastAPI)
+- [ ] RESTful endpoints implemented:  
+  - `/predict` for inference  
+  - `/models` CRUD for admin  
+  - `/signup`, `/login` for auth  
+- [ ] Pydantic validation and appropriate HTTP status codes  
+- [ ] Pytest unit & integration tests  
+- [ ] Structured JSON logging  
+
+### Model Backend (FastAPI)
+- [ ] Loads and caches scikit‑learn models at startup  
+- [ ] `/inference` endpoint returns probability & boolean result  
+- [ ] `/training` endpoint retrains model asynchronously, persists new `.pkl` files  
+- [x] Service only exposed on Docker network  
+- [ ] Unit & integration tests with pytest  
+
+---
+
+### Documentation & Presentation
+- [ ] Updated **README.md** in each service with build/run instructions  
+- [ ] `docs/Project-Requirements.md` reflects final, production‑ready checklist  
+- [ ] Deployment guide in `docs/` shows one‑step `docker-compose` workflow  
+- [ ] Architecture diagram and changelog updated and versioned  
+- [ ] 10–15 slide deck PDF covering:  
+  - Demo of core workflows  
+  - Architecture overview  
+  - Team member contributions  
