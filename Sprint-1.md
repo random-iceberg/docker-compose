@@ -1,4 +1,7 @@
-# Sprint 1 – Full MVP Delivery for Titanic Survivor Prediction Application
+---
+title: Sprint 1 – Full MVP Delivery for Titanic Survivor Prediction Application
+revision: v2-final · 08 May 2025
+---
 
 **Sprint Duration:** 2 Weeks  
 **Team Members & Hours (Approx.):**  
