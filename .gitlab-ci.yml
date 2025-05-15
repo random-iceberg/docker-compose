@@ -9,8 +9,10 @@ check-health:
   stage: default
   services:
     - docker:dind
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+    - test ! -z $cicdtoken
+    - git config --global url."https://gitlab-ci-token:${cicdtoken}@${CI_SERVER_HOST}/".insteadOf "https://${CI_SERVER_HOST}/"
+    - git submodule update --init --recursive app model
   script:
     # Try to build the images
     - docker compose build --pull
