@@ -2,6 +2,7 @@
 
 stages: # List of stages for jobs, and their order of execution
   - default
+  - e2e
 
 # Run health checks on that revision which is pinned in submodules
 check-health:
@@ -27,3 +28,27 @@ check-health:
 
   rules:
     - if: $CI_COMMIT_BRANCH
+
+# TODO: actually run e2e tests
+# Run e2e tests. Revision of each service container is the matching tag.
+e2e-tests:
+  image: docker:cli
+  stage: e2e
+  services:
+    - docker:dind
+  variables:
+    IMAGE_GROUP: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg
+    IMAGE_TAG: $CI_COMMIT_REF_SLUG
+    COMPOSE: docker compose -f ./compose/compose.prod-registry.yaml
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$cicdtoken" $CI_REGISTRY
+  script:
+    - $COMPOSE pull
+    - $COMPOSE up --wait
+    - $COMPOSE down
+
+  rules:
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      variables:
+        IMAGE_TAG: latest
+    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION
