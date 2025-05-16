@@ -2,10 +2,8 @@
 
 stages: # List of stages for jobs, and their order of execution
   - default
-  - e2e
 
-# Run health checks on that revision which is pinned in submodules
-check-health:
+.check-health:
   image: docker:cli
   stage: default
   services:
@@ -16,30 +14,43 @@ check-health:
     - git submodule update --init --recursive app model
   script:
     # Try to build the images
-    - docker compose build --pull
+    - $COMPOSE build --pull
     # Wait for health checks to pass
-    - docker compose up --wait
+    - $COMPOSE up --wait
     # Ok
-    - docker compose down
-    # And do the same for the dev configuration
-    - docker compose -f ./compose/compose.dev.yaml build --pull
-    - docker compose -f ./compose/compose.dev.yaml up --wait
-    - docker compose -f ./compose/compose.dev.yaml down
-
+    - $COMPOSE down
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH
+
+# Run health checks on that revision which is pinned in submodules
+check-health:
+  extends:
+    - .check-health
+  variables:
+    COMPOSE: docker compose -f ./compose/compose.prod-local.yaml -f ./compose/config/ci-overrides.yaml
+  
+
+# Run health checks on that revision which is pinned in submodules
+check-health-dev:
+  extends:
+    - .check-health
+  variables:
+    COMPOSE: docker compose -f ./compose/compose.dev.yaml -f ./compose/config/ci-overrides.yaml
+    
 
 # TODO: actually run e2e tests
 # Run e2e tests. Revision of each service container is the matching tag.
 e2e-tests:
   image: docker:cli
-  stage: e2e
+  stage: default
   services:
     - docker:dind
   variables:
     IMAGE_GROUP: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg
     IMAGE_TAG: $CI_COMMIT_REF_SLUG
-    COMPOSE: docker compose -f ./compose/compose.prod-registry.yaml
+    COMPOSE: docker compose -f ./compose/compose.prod-registry.yaml -f ./compose/config/ci-overrides.yaml
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$cicdtoken" $CI_REGISTRY
   script:
@@ -48,7 +59,7 @@ e2e-tests:
     - $COMPOSE down
 
   rules:
-    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       variables:
         IMAGE_TAG: latest
-    - if: $CI_PIPELINE_SCHEDULE_DESCRIPTION
+    - if: $CI_PIPELINE_SOURCE == "schedule"
