@@ -1,11 +1,12 @@
 # https://docs.gitlab.com/ci/yaml
 
 stages: # List of stages for jobs, and their order of execution
-  - default
+  - check-dev
+  - check-prod
+  - e2e
 
 .check-health:
   image: docker:cli
-  stage: default
   services:
     - docker:dind
   before_script:
@@ -26,6 +27,7 @@ stages: # List of stages for jobs, and their order of execution
 
 # Run health checks on that revision which is pinned in submodules
 check-health:
+  stage: check-prod
   extends:
     - .check-health
   variables:
@@ -36,6 +38,7 @@ check-health:
 check-health-dev:
   extends:
     - .check-health
+  stage: check-dev
   variables:
     COMPOSE: docker compose -f ./compose/compose.dev.yaml -f ./compose/config/ci-overrides.yaml
     
@@ -44,7 +47,7 @@ check-health-dev:
 # Run e2e tests. Revision of each service container is the matching tag.
 e2e-tests:
   image: docker:cli
-  stage: default
+  stage: e2e
   services:
     - docker:dind
   variables:
