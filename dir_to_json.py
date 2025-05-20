@@ -33,6 +33,8 @@ EXPLICIT_IGNORE_FOLDERS = {
     'node_modules',
     '.venv',
     '__pycache__',
+    '__tests__',
+    '__snapshots__',
 }
 
 def parse_ignore_file(ignore_file_path):

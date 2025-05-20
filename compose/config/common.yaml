@@ -36,6 +36,10 @@ services:
   # Model service (FastAPI)
   model:
     restart: unless-stopped
+    volumes:
+      - model-data:/data
+    environment:
+      DATA_PREFIX: /data
     depends_on:
       postgres:
         condition: service_healthy
@@ -88,3 +92,4 @@ services:
 
 volumes:
   postgres-data:
+  model-data:
