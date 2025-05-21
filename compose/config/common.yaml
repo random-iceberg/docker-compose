@@ -67,7 +67,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-  
+
   # Database GUI (pgAdmin)
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -83,12 +83,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    healthcheck:
-        test: ["CMD-SHELL", "curl -sf http://localhost/"]
-        interval: 30s
-        timeout: 10s
-        retries: 3
-        start_period: 30s
+    # healthcheck:
+    #     test: ["CMD-SHELL", "curl -sf http://localhost/"] # curl is not available
+    #     interval: 30s
+    #     timeout: 10s
+    #     retries: 3
+    #     start_period: 30s
 
 volumes:
   postgres-data:
