@@ -26,6 +26,7 @@ services:
       DB_DATABASE: backend
       DB_ADDRESS: postgres
       DB_PASSWORD: "${POSTGRES_PASSWORD_BACKEND:-_backend}"
+      JWT_SECRET_KEY: "${JWT_SECRET_KEY:-_ultrasecurejwtsecretkey}"
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:8000/health"]
       interval: 30s
