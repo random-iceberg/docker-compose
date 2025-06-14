@@ -213,98 +213,146 @@ Your task is to develop a web application powered by artificial intelligence to 
 
 ---
 
-## ✔️ Grand Checklist
+# Titanic Survivor App - Project Requirements Checklist
+
+## Task 1 - Titanic Survivor App
 
 ### Functional Requirements
-- [ ] **Landing Page**  
-  - [x] Short explanation of app purpose  
-  - [x] Navigation links to Home, Calculator, Admin, Advertisement  
-  - [ ] Responsive layout on desktop and mobile  
 
-- [ ] **User Account**  
-  - [ ] Sign‑up with email & password (securely hashed)  
-  - [ ] Login / logout flows with JWT  
-  - [ ] Appropriate 401/409 error responses  
+#### Landing Page
+- [ ] Shows a short explanation of the functionality
+- [ ] Contains navigation (links) to all other pages
 
-- [ ] **Advertisement Page**  
-  - [ ] Marketing narrative and visuals in place  
-  - [ ] Clear calls‑to‑action to demo and course enrollment  
+#### User Account
+- [ ] Register an account using an email address and a password
+- [ ] Log in using the username and password
 
-- [ ] **Survival Calculator**  
-  - [ ] All inputs present & validated:  
-    - Class (1/2/3), Sex (male/female), Age (0–100), Fare (0–500),  
-    - Embarked (C/Q/S), Title, Were Alone, Cabin Known  
-  - [ ] Inline field explanations  
-  - [ ] Live prediction update on any input change  
-  - [ ] Reset button clears all inputs  
-  - [ ] Model selection works:  
-    - Anonymous: choose exactly one of {Random Forest, SVM}  
-    - Authenticated: any combination of available models  
-  - [ ] Display “Survived” / “Did Not Survive” per model  
-  - [ ] Persist last 10 predictions for logged‑in users  
+#### Advertisement Page
+- [ ] Promote your extremely successful online course on creating AI-powered web applications
 
-- [x] **Admin Console**  
-  - [x] List all trained models with name, algorithm, features, accuracy, date  
-  - [x] Delete existing models  
-  - [x] Train new models by selecting features and naming them  
-  - [x] Newly trained models appear immediately in Calculator  
+#### Survival Calculator
+**Passenger Definition (All Required):**
+- [ ] **Class:** First, Second, Third
+- [ ] **Sex:** Male or Female  
+- [ ] **Age:** 0-100
+- [ ] **Fare:** 0-500 $
+- [ ] **Traveled Alone:** Yes or No
+- [ ] **Embarked:** Cherbourg, Queenstown, Southampton
+- [ ] **Title:** Master, Miss, Mr, Mrs, Rare
 
----
+**Calculator Features:**
+- [ ] Each passenger property has an in-page explanation
+- [ ] Continuously update the shown prediction after each input change
+- [ ] Contains a reset button for the passenger inputs
 
-### Non‑Functional Requirements
+**Model Selection:**
+- [ ] **Anonymous Users:** Allow selection of a single model from Random Forest or Support Vector Machines
+- [ ] **Logged In Users:** Allow selection of any combination of all available models
+- [ ] Display the prediction ("Survived" or "Did not survive") for each model
 
-#### Architecture & Containerization
-- [X] Four services containerized:  
-  Web Frontend, Web Backend, Model Backend, Database (Postgres + GoTrue)  
-- [x] Single `docker-compose.yml` orchestrates all services  
-- [x] Reverse proxy (Nginx/Caddy/Traefik) routes traffic and serves static assets  
-- [x] Persistent volumes for Postgres data and model artifacts  
-- [x] Zero manual configuration—no local `.env` edits required  
-- [x] App accessible at `http://localhost:8080` after `docker-compose up --build -d`
+**Prediction History:**
+- [ ] For Logged In Users, show a persistent history of the last 10 passengers with prediction results
 
-#### CI/CD & Testing
-- [ ] GitLab CI builds and pushes Docker images for all services on every commit  
-- [ ] Unit & integration tests for Python and TypeScript run on each commit  
-- [ ] Nightly end‑to‑end tests (Cypress or Playwright) against the full stack  
-- [ ] Coverage gate: pipeline fails if overall coverage < 80 %
+#### Admin Features
+- [ ] View all existing trained models and delete a model
+- [ ] Select any number of features from the feature list and train a new model
+- [ ] After training, the model shall be available in the Survival Calculator's Model Selection under a name chosen by the user
 
 ---
 
-### Frontend (React + TypeScript)
-- [ ] SPA implemented with React & TypeScript  
-- [ ] Tailwind CSS for responsive styling  
-- [ ] Works in Chrome ≥ 119, Firefox ≥ 122, Safari ≥ 16.1  
-- [ ] Component tests with Jest / React Testing Library  
-- [ ] End‑to‑end tests for core user flows  
+### Non-Functional Requirements
 
-### Web Backend (FastAPI)
-- [ ] RESTful endpoints implemented:  
-  - `/predict` for inference  
-  - `/models` CRUD for admin  
-  - `/signup`, `/login` for auth  
-- [ ] Pydantic validation and appropriate HTTP status codes  
-- [ ] Pytest unit & integration tests  
-- [ ] Structured JSON logging  
+#### General Architecture
+- [ ] Application consists of these four services: **Web Frontend**, **Web Backend**, **Database**, **Model Backend**
+- [ ] Use a reverse proxy: Caddy, Nginx, or Traefik
+- [ ] All services containerized using Docker containers
+- [ ] Docker images built with Gitlab CI and pushed to Gitlab Container Registry
+- [ ] Application containers orchestrated using single Docker Compose specification (`compose.yaml`)
+- [ ] Application accessible at `http://localhost:8080`
+- [ ] Unit and Integration tests executed in Gitlab pipeline on every commit
+- [ ] End2end tests run in nightly pipeline of docker-compose project
 
-### Model Backend (FastAPI)
-- [ ] Loads and caches scikit‑learn models at startup  
-- [ ] `/inference` endpoint returns probability & boolean result  
-- [ ] `/training` endpoint retrains model asynchronously, persists new `.pkl` files  
-- [x] Service only exposed on Docker network  
-- [ ] Unit & integration tests with pytest  
+#### Docker Compose
+- [ ] Managed in the docker-compose repository
+- [ ] All other required repositories included in this repository via git submodules
+
+#### Project Management
+- [ ] Project conducted according to Scrum framework with 3 sprints (adjusted to 4 sprints of 2 weeks each)
+- [ ] Product Backlog created and maintained according to this document
+- [ ] All non-code project resources managed and maintained within Gitlab project **project-management**
+- [ ] Source code actively managed in mygit using provided team Gitlab group
+- [ ] From official project start, at least one git commit with code done per week
+
+#### Web Frontend Requirements
+**Browser Compatibility:**
+- [ ] Chrome >= 119
+- [ ] Firefox >= 122  
+- [ ] Safari >= 16.1
+
+**Technical Implementation:**
+- [ ] Created in Javascript or Typescript, using HTML and CSS
+- [ ] Written as Single Page Application (SPA) using React or Vue
+- [ ] Optimized for mobile screens
+- [ ] Unit and Integration tests for all JavaScript/TypeScript code using respective test frameworks for Vue or React
+- [ ] All functional requirements verified in terms of E2E tests
+- [ ] End2End tests written using Cypress or Playwright
+
+**Reverse Proxy Integration:**
+- [ ] Reverse proxy is part of the web frontend service
+- [ ] Routes all external traffic to respective internal service and serves static files for web frontend
+- [ ] No `npm run dev` in production code
+
+#### Web Backend Requirements
+- [ ] Code written in Python using FastAPI
+- [ ] Unit and Integration tests for all Python code written using pytest framework
+
+#### Model Backend Requirements
+**Technical Implementation:**
+- [ ] Code written in Python using FastAPI
+- [ ] Prediction model inference accessible via RESTful API within Docker network
+- [ ] Prediction model service API inaccessible from outside of Docker network
+
+**Model Implementation:**
+- [ ] Provided models use exact implementation from proof-of-concept notebook (titanic-data-science-solutions.ipynb)
+- [ ] At least these base algorithms available: **Random Forest**, **Decision Tree**, **KNN**, **Support Vector Machines**, **Logistic Regression**
+- [ ] Following features used for default model training: **Survived, Pclass, Sex, Age, Fare, Embarked, Title, IsAlone, Age*Class**
+- [ ] For each available trained model, the name, used features, and algorithm are stored in a database table
+
+**Model Persistence:**
+- [ ] **First Start:** All default models trained and stored as Pickle files
+- [ ] **Subsequent Start-ups:** Existing pickle files loaded from disk (requires use of Docker volumes)
+- [ ] Any additional trained models by admin user persisted over container re-creation
+
+**Testing:**
+- [ ] Unit and Integration tests for all Python code written using pytest framework
 
 ---
 
-### Documentation & Presentation
-- [ ] Updated **README.md** in each service with build/run instructions  
-- [ ] `docs/Project-Requirements.md` reflects final, production‑ready checklist  
-- [ ] Deployment guide in `docs/` shows one‑step `docker-compose` workflow  
-- [ ] Architecture diagram and changelog updated and versioned  
-- [ ] 10–15 slide deck PDF covering:  
-  - Demo of core workflows  
-  - Architecture overview  
-  - Team member contributions  
+## Task 2 - Presentation
+
+- [ ] Create a presentation document of **10-15 slides**
+- [ ] Demonstrate the software developed in Task 1
+- [ ] Provide insights on the architecture of the system
+- [ ] Highlight aspects that make the solution special
+- [ ] **Individual Contributions:** Each group member creates and presents a slide listing their personal contribution to the project
 
 ---
 
-*Last updated: May 9, 2025*
+## Submission Requirements
+
+- [ ] Complete both Task 1 and Task 2
+- [ ] Attend Project Meetings (online) and final Presentation (in presence in Deggendorf)
+- [ ] Groups of 7 students make joint submission
+- [ ] Submission includes:
+  - [ ] Names and matriculation numbers of all team students
+  - [ ] All source code, configuration files, documentation
+  - [ ] All Git repositories as downloaded from Gitlab according to provided documentation
+  - [ ] README file explaining how to build, run, and access web application using Docker images and Docker Compose specification
+  - [ ] PDF of team presentation
+- [ ] Submit solution as ZIP archive via iLearn
+- [ ] Only submissions that build successfully without errors (Docker on Ubuntu Noble Numbat 24.04 LTS) are graded
+- [ ] Only commits using official student email address (@stud.th-deg.de) are graded
+
+---
+
+*Based on Project Requirements: Summerterm 2025 - Prof. Dr. Christoph Schober*
