@@ -220,30 +220,30 @@ Your task is to develop a web application powered by artificial intelligence to 
 ### Functional Requirements
 
 #### Landing Page
-- [ ] Shows a short explanation of the functionality
-- [ ] Contains navigation (links) to all other pages
+- [x] Shows a short explanation of the functionality
+- [x] Contains navigation (links) to all other pages
 
 #### User Account
-- [ ] Register an account using an email address and a password
-- [ ] Log in using the username and password
+- [x] Register an account using an email address and a password
+- [x] Log in using the username and password
 
 #### Advertisement Page
-- [ ] Promote your extremely successful online course on creating AI-powered web applications
+- [x] Promote your extremely successful online course on creating AI-powered web applications
 
 #### Survival Calculator
 **Passenger Definition (All Required):**
-- [ ] **Class:** First, Second, Third
-- [ ] **Sex:** Male or Female  
-- [ ] **Age:** 0-100
+- [x] **Class:** First, Second, Third
+- [x] **Sex:** Male or Female  
+- [x] **Age:** 0-100
 - [ ] **Fare:** 0-500 $
-- [ ] **Traveled Alone:** Yes or No
-- [ ] **Embarked:** Cherbourg, Queenstown, Southampton
+- [x] **Traveled Alone:** Yes or No
+- [x] **Embarked:** Cherbourg, Queenstown, Southampton
 - [ ] **Title:** Master, Miss, Mr, Mrs, Rare
 
 **Calculator Features:**
-- [ ] Each passenger property has an in-page explanation
+- [x] Each passenger property has an in-page explanation
 - [ ] Continuously update the shown prediction after each input change
-- [ ] Contains a reset button for the passenger inputs
+- [x] Contains a reset button for the passenger inputs
 
 **Model Selection:**
 - [ ] **Anonymous Users:** Allow selection of a single model from Random Forest or Support Vector Machines
@@ -251,72 +251,72 @@ Your task is to develop a web application powered by artificial intelligence to 
 - [ ] Display the prediction ("Survived" or "Did not survive") for each model
 
 **Prediction History:**
-- [ ] For Logged In Users, show a persistent history of the last 10 passengers with prediction results
+- [x] For Logged In Users, show a persistent history of the last 10 passengers with prediction results
 
 #### Admin Features
-- [ ] View all existing trained models and delete a model
-- [ ] Select any number of features from the feature list and train a new model
-- [ ] After training, the model shall be available in the Survival Calculator's Model Selection under a name chosen by the user
+- [x] View all existing trained models and delete a model
+- [x] Select any number of features from the feature list and train a new model
+- [x] After training, the model shall be available in the Survival Calculator's Model Selection under a name chosen by the user
 
 ---
 
 ### Non-Functional Requirements
 
 #### General Architecture
-- [ ] Application consists of these four services: **Web Frontend**, **Web Backend**, **Database**, **Model Backend**
-- [ ] Use a reverse proxy: Caddy, Nginx, or Traefik
-- [ ] All services containerized using Docker containers
-- [ ] Docker images built with Gitlab CI and pushed to Gitlab Container Registry
-- [ ] Application containers orchestrated using single Docker Compose specification (`compose.yaml`)
-- [ ] Application accessible at `http://localhost:8080`
-- [ ] Unit and Integration tests executed in Gitlab pipeline on every commit
+- [x] Application consists of these four services: **Web Frontend**, **Web Backend**, **Database**, **Model Backend**
+- [x] Use a reverse proxy: Caddy, Nginx, or Traefik
+- [x] All services containerized using Docker containers
+- [x] Docker images built with Gitlab CI and pushed to Gitlab Container Registry
+- [x] Application containers orchestrated using single Docker Compose specification (`compose.yaml`)
+- [x] Application accessible at `http://localhost:8080`
+- [x] Unit and Integration tests executed in Gitlab pipeline on every commit
 - [ ] End2end tests run in nightly pipeline of docker-compose project
 
 #### Docker Compose
-- [ ] Managed in the docker-compose repository
-- [ ] All other required repositories included in this repository via git submodules
+- [x] Managed in the docker-compose repository
+- [x] All other required repositories included in this repository via git submodules
 
 #### Project Management
-- [ ] Project conducted according to Scrum framework with 3 sprints (adjusted to 4 sprints of 2 weeks each)
-- [ ] Product Backlog created and maintained according to this document
-- [ ] All non-code project resources managed and maintained within Gitlab project **project-management**
-- [ ] Source code actively managed in mygit using provided team Gitlab group
-- [ ] From official project start, at least one git commit with code done per week
+- [x] Project conducted according to Scrum framework with 3 sprints (adjusted to 4 sprints of 2 weeks each)
+- [x] Product Backlog created and maintained according to this document
+- [x] All non-code project resources managed and maintained within Gitlab project **project-management**
+- [x] Source code actively managed in mygit using provided team Gitlab group
+- [x] From official project start, at least one git commit with code done per week
 
 #### Web Frontend Requirements
 **Browser Compatibility:**
-- [ ] Chrome >= 119
-- [ ] Firefox >= 122  
-- [ ] Safari >= 16.1
+- [x] Chrome >= 119
+- [x] Firefox >= 122  
+- [x] Safari >= 16.1
 
 **Technical Implementation:**
-- [ ] Created in Javascript or Typescript, using HTML and CSS
-- [ ] Written as Single Page Application (SPA) using React or Vue
-- [ ] Optimized for mobile screens
-- [ ] Unit and Integration tests for all JavaScript/TypeScript code using respective test frameworks for Vue or React
+- [x] Created in Javascript or Typescript, using HTML and CSS
+- [x] Written as Single Page Application (SPA) using React or Vue
+- [x] Optimized for mobile screens
+- [x] Unit and Integration tests for all JavaScript/TypeScript code using respective test frameworks for Vue or React
 - [ ] All functional requirements verified in terms of E2E tests
 - [ ] End2End tests written using Cypress or Playwright
 
 **Reverse Proxy Integration:**
-- [ ] Reverse proxy is part of the web frontend service
-- [ ] Routes all external traffic to respective internal service and serves static files for web frontend
-- [ ] No `npm run dev` in production code
+- [x] Reverse proxy is part of the web frontend service
+- [x] Routes all external traffic to respective internal service and serves static files for web frontend
+- [x] No `npm run dev` in production code
 
 #### Web Backend Requirements
-- [ ] Code written in Python using FastAPI
-- [ ] Unit and Integration tests for all Python code written using pytest framework
+- [x] Code written in Python using FastAPI
+- [x] Unit and Integration tests for all Python code written using pytest framework
 
 #### Model Backend Requirements
 **Technical Implementation:**
-- [ ] Code written in Python using FastAPI
-- [ ] Prediction model inference accessible via RESTful API within Docker network
-- [ ] Prediction model service API inaccessible from outside of Docker network
+- [x] Code written in Python using FastAPI
+- [x] Prediction model inference accessible via RESTful API within Docker network
+- [x] Prediction model service API inaccessible from outside of Docker network
 
 **Model Implementation:**
 - [ ] Provided models use exact implementation from proof-of-concept notebook (titanic-data-science-solutions.ipynb)
-- [ ] At least these base algorithms available: **Random Forest**, **Decision Tree**, **KNN**, **Support Vector Machines**, **Logistic Regression**
-- [ ] Following features used for default model training: **Survived, Pclass, Sex, Age, Fare, Embarked, Title, IsAlone, Age*Class**
-- [ ] For each available trained model, the name, used features, and algorithm are stored in a database table
+- [x] At least these base algorithms available: **Random Forest**, **Decision Tree**, **KNN**, **Support Vector Machines**, **Logistic Regression**
+- [x] Following features used for default model training: **Survived, Pclass, Sex, Age, Fare, Embarked, Title, IsAlone, Age*Class**
+- [x] For each available trained model, the name, used features, and algorithm are stored in a database table
 
 **Model Persistence:**
 - [ ] **First Start:** All default models trained and stored as Pickle files
@@ -324,7 +324,7 @@ Your task is to develop a web application powered by artificial intelligence to 
 - [ ] Any additional trained models by admin user persisted over container re-creation
 
 **Testing:**
-- [ ] Unit and Integration tests for all Python code written using pytest framework
+- [x] Unit and Integration tests for all Python code written using pytest framework
 
 ---
 
