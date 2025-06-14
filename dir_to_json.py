@@ -24,6 +24,7 @@ EXPLICIT_IGNORE_FILES = {
     # 'Sprint-3.md',
     # 'Sprint-4.md',
     'package-lock.json',
+    'Project-Charter.md'
 }
 
 # Folders (and file names) to ignore entirely
@@ -35,6 +36,7 @@ EXPLICIT_IGNORE_FOLDERS = {
     '__pycache__',
     '__tests__',
     '__snapshots__',
+    'build'
 }
 
 def parse_ignore_file(ignore_file_path):
