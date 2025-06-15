@@ -256,7 +256,7 @@ Your task is to develop a web application powered by artificial intelligence to 
 #### Admin Features
 - [x] View all existing trained models and delete a model
 - [x] Select any number of features from the feature list and train a new model
-- [x] After training, the model shall be available in the Survival Calculator's Model Selection under a name chosen by the user
+- [ ] After training, the model shall be available in the Survival Calculator's Model Selection under a name chosen by the user
 
 ---
 
@@ -319,9 +319,9 @@ Your task is to develop a web application powered by artificial intelligence to 
 - [x] For each available trained model, the name, used features, and algorithm are stored in a database table
 
 **Model Persistence:**
-- [ ] **First Start:** All default models trained and stored as Pickle files
-- [ ] **Subsequent Start-ups:** Existing pickle files loaded from disk (requires use of Docker volumes)
-- [ ] Any additional trained models by admin user persisted over container re-creation
+- [x] **First Start:** All default models trained and stored as Pickle files
+- [x] **Subsequent Start-ups:** Existing pickle files loaded from disk (requires use of Docker volumes)
+- [x] Any additional trained models by admin user persisted over container re-creation
 
 **Testing:**
 - [x] Unit and Integration tests for all Python code written using pytest framework
