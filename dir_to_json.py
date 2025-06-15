@@ -36,7 +36,9 @@ EXPLICIT_IGNORE_FOLDERS = {
     '__pycache__',
     '__tests__',
     '__snapshots__',
-    'build'
+    'build',
+    '.pytest_cache',
+    '.ruff_cache'
 }
 
 def parse_ignore_file(ignore_file_path):
