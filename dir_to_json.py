@@ -34,7 +34,7 @@ EXPLICIT_IGNORE_FOLDERS = {
     'node_modules',
     '.venv',
     '__pycache__',
-    '__tests__',
+    # '__tests__',
     '__snapshots__',
     'build',
     '.pytest_cache',
