@@ -238,23 +238,45 @@ architecture-beta
 
 ## 6. Project Timeline and Sprint Structure
 
-**Methodology:** Scrum with 4 sprints of 2 weeks each (adjusted from original 3 sprints of 3 weeks)
+**Methodology:** Scrum with 3 sprints of 3 weeks each
 
 ### Sprint Deliverables
 
 | Sprint | Duration | Focus Area | Key Deliverables |
 |--------|----------|------------|------------------|
-| **Sprint 1** | Weeks 1-2 | Core MVP Integration | Complete dockerized stack, basic prediction flow, landing page, admin console UI |
-| **Sprint 2** | Weeks 3-4 | Authentication & Production Hardening | JWT authentication, RBAC, CI/CD pipeline, structured logging |
-| **Sprint 3** | Weeks 5-6 | Feature Enhancement & Testing | E2E testing, UI polish, performance optimization, comprehensive error handling |
-| **Sprint 4** | Weeks 7-8 | Final QA & Documentation | Production deployment, documentation finalization, stakeholder demo |
+| **Sprint 1** | Weeks 1-3 | Foundation & Core Infrastructure | Complete dockerized stack skeleton, admin console UI, survival calculator interface, backend API skeleton with basic endpoints |
+| **Sprint 2** | Weeks 4-6 | Full Feature Implementation & Integration | Complete prediction flow, model training/management, polished UI/UX, CI/CD pipeline, comprehensive testing, production-ready deployment |
+| **Sprint 3** | Weeks 7-9 | Authentication & Final Requirements | User authentication (login/signup), known issue resolution, final requirement completion, documentation finalization, stakeholder demo |
 
 ### Milestone Achievement
 
-- **✅ Sprint 1 Complete:** MVP with all core services operational
-- **✅ Sprint 2 Complete:** Production-ready authentication and hardened CI/CD
-- **🔄 Sprint 3 In Progress:** Testing coverage and UI refinements
-- **📋 Sprint 4 Planned:** Final documentation and deployment validation
+- **✅ Sprint 1 Complete:** Foundational architecture with skeleton implementations across all services
+- **✅ Sprint 2 Complete:** Fully functional MVP with prediction capabilities, admin console, and production deployment
+- **🔄 Sprint 3 In Progress:** Authentication implementation and final requirement completion
+
+### Sprint Details
+
+**Sprint 1 Achievements:**
+- Docker Compose orchestration with all services
+- Admin console user interface for model management
+- Survival calculator form with input validation
+- Backend API skeleton with health checks and basic structure
+- Initial CI/CD pipeline setup
+
+**Sprint 2 Achievements:**
+- Complete prediction workflow (frontend → backend → model service)
+- Model training and persistence functionality
+- Polished landing page with marketing integration
+- Comprehensive testing suite (unit, integration)
+- Production-ready Docker configurations
+- Full CI/CD pipeline with automated testing and registry publishing
+
+**Sprint 3 Goals:**
+- JWT-based user authentication system
+- Login and signup functionality with secure password handling
+- Resolution of identified technical debt and known issues
+- Final requirement validation and completion
+- Documentation updates and final presentation preparation
 
 ---
 
