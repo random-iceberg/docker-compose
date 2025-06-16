@@ -53,8 +53,7 @@ open http://localhost:8080
 
 ```bash
 # Start development environment with code syncing
-cd compose
-docker compose -f compose.dev.yaml up
+docker compose -f 'compose/compose.dev.yaml' up -d --build
 
 # Access services:
 # - Frontend: http://localhost:8080
@@ -69,21 +68,9 @@ docker compose -f compose.dev.yaml up
 
 ```bash
 # Test production build
-cd compose
-docker compose -f compose.prod-local.yaml up -d
+docker compose -f 'compose/compose.prod-local.yaml' up -d
 
 # Main app: http://localhost:8080
-```
-
-### Running Tests
-
-```bash
-# All tests run automatically in CI/CD on push
-
-# Or run tests inside containers:
-docker compose exec backend uv run pytest
-docker compose exec frontend npm test
-docker compose exec model uv run pytest
 ```
 
 ## 🚢 Production Deployment
