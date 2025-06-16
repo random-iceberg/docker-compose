@@ -24,7 +24,8 @@ EXPLICIT_IGNORE_FILES = {
     # 'Sprint-3.md',
     # 'Sprint-4.md',
     'package-lock.json',
-    'Project-Charter.md'
+    'Project-Charter.md',
+    'uv.lock'    
 }
 
 # Folders (and file names) to ignore entirely
