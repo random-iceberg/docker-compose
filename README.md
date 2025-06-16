@@ -24,12 +24,12 @@ open http://localhost:8080
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌──────────────┐
-│   Frontend  │────▶│   Backend   │────▶│ Model Service│
+│   Frontend  │────►│   Backend   │────►│ Model Service│
 │   (React)   │     │  (FastAPI)  │     │  (FastAPI)   │
 └─────────────┘     └──────┬──────┘     └──────────────┘
-      Port 8080            │                Port 8000
+   Port 8080               │               Port 8000
                     ┌──────▼──────┐     ┌──────────────┐
-                    │  PostgreSQL │────▶│   pgAdmin    │
+                    │  PostgreSQL │────►│   pgAdmin    │
                     └─────────────┘     └──────────────┘
                        Port 5432           Port 5050
 ```
@@ -73,20 +73,6 @@ docker compose -f 'compose/compose.prod-local.yaml' up -d
 # Main app: http://localhost:8080
 ```
 
-## 🚢 Production Deployment
-
-### Using Local Build
-```bash
-docker compose -f compose/compose.prod-local.yaml up -d
-```
-
-### Using Registry Images
-```bash
-export IMAGE_GROUP=registry.mygit.th-deg.de/...
-export IMAGE_TAG=latest
-docker compose -f compose/compose.prod-registry.yaml up -d
-```
-
 ## 📁 Project Structure
 
 ```
@@ -103,36 +89,6 @@ docker-compose/
 ├── docs/                # Documentation (submodule)
 └── postgres/            # Database initialization
 ```
-
-## 🔧 Optional: Local Development (without Docker)
-
-If you prefer to run services locally for development:
-
-### Backend
-```bash
-cd app/backend
-uv sync --extra dev
-uv run uvicorn main:app --reload
-# API docs at http://localhost:8000/docs
-```
-
-### Frontend
-```bash
-cd app/frontend
-npm install
-npm start
-# UI at http://localhost:3000
-```
-
-### Model Service
-```bash
-cd model
-uv sync --extra dev
-uv run uvicorn main:app --reload --port 8001
-# API docs at http://localhost:8001/docs
-```
-
-**Note**: Local development requires PostgreSQL and proper environment configuration.
 
 ## 🔗 Service Documentation
 
