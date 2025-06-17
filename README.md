@@ -1,118 +1,117 @@
-# Docker Compose Orchestration for Titanic Survivor Prediction Application
+# Titanic Survivor Prediction Application
+
+A production-ready web application that predicts Titanic passenger survival using machine learning models. Built with React, FastAPI, and scikit-learn.
 
 ![team/random_iceberg banner](./docs/random_iceberg.png)
 
-This repository provides a centralized Docker Compose configuration to orchestrate the major services of the Titanic Survivor Prediction Application. The architecture consists of:
+## 🚀 Quick Start (Zero Configuration)
 
-- **Frontend**: A React-based Single Page Application.
-- **Backend**: A FastAPI server managing business logic and API endpoints.
-- **Model Service**: A dedicated microservice for machine learning model inference.
-- **Supabase**: A self-hosted service for user authentication and data storage.
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/docker-compose.git
+cd docker-compose
 
-## Project Directory Structure
+# Start all services (production test)
+docker compose up --build -d
 
-The project follows a modular structure to ensure maintainability and scalability. Below is a high-level layout of the repository:
+# Access the application
+open http://localhost:8080
+```
+
+**That's it!** No environment setup, no dependencies to install, no configuration needed.
+
+## 🏗️ Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌──────────────┐
+│   Frontend  │────►│   Backend   │────►│ Model Service│
+│   (React)   │     │  (FastAPI)  │     │  (FastAPI)   │
+└─────────────┘     └──────┬──────┘     └──────────────┘
+   Port 8080               │               Port 8000
+                    ┌──────▼──────┐     ┌──────────────┐
+                    │  PostgreSQL │────►│   pgAdmin    │
+                    └─────────────┘     └──────────────┘
+                       Port 5432           Port 5050
+```
+
+## 📋 Features
+
+- **Survival Prediction**: Real-time predictions based on passenger attributes
+- **Model Management**: Train, evaluate, and delete ML models
+- **User Authentication**: JWT-based secure authentication
+- **Admin Console**: Model training and management interface
+- **Responsive Design**: Mobile-first, accessible UI
+- **Zero Config**: Works out of the box with Docker Compose
+
+## 🛠️ Development Workflow
+
+### Prerequisites
+- Docker & Docker Compose
+- Git with submodule support
+
+### Development Mode (with hot reload)
+
+```bash
+# Start development environment with code syncing
+docker compose -f 'compose/compose.dev.yaml' up -d --build
+
+# Access services:
+# - Frontend: http://localhost:8080
+# - Backend Swagger: http://localhost:8000/docs
+# - Model Swagger: http://localhost:8001/docs
+# - pgAdmin: http://localhost:5050
+#   - Email: team@random.iceberg
+#   - Password: Cheezus123
+```
+
+### Testing Production Build Locally
+
+```bash
+# Test production build
+docker compose -f 'compose/compose.prod-local.yaml' up -d
+
+# Main app: http://localhost:8080
+```
+
+## 📁 Project Structure
 
 ```
 docker-compose/
-├── CONTRIBUTING.md          # Guidelines for contributing and commit message conventions
-├── dir_to_json.py           # Utility to convert the directory structure to JSON
-├── docker-compose.yml       # Orchestrates all services (frontend, backend, model, supabase)
-├── README.md
-├── docs/                    # Documentation and Project Charter submodule
-│   ├── home.md
-│   ├── Project-Charter.md
-│   └── random_iceberg.png
-├── app/                     # Application code for web services
-│   ├── backend/             # FastAPI backend service
-│   │   ├── README.md
-│   │   ├── main.py
-│   │   ├── requirements.txt
-│   │   ├── routers/         # API route definitions
-│   │   ├── models/          # Data models and schemas
-│   │   ├── services/        # Business logic and integration layers
-│   │   └── tests/           # Unit and integration tests
-│   └── frontend/
-│       ├── README.md
-│       ├── package.json
-│       ├── src/             # Source files: components, assets, etc.
-│       └── public/          # Public assets and HTML templates
-└── model/
-    ├── README.md
-    ├── main.py
-    ├── requirements.txt
-    ├── training/            # Scripts and configuration for model training
-    ├── inference/           # Inference logic and endpoints
-    └── tests/               # Tests for model training and inference
+├── docker-compose.yaml   # Default (production) configuration
+├── compose/              # Compose configurations
+│   ├── compose.dev.yaml          # Development with hot reload
+│   ├── compose.prod-local.yaml   # Production from local build
+│   └── compose.prod-registry.yaml # Production from registry
+├── app/
+│   ├── frontend/        # React frontend (submodule)
+│   └── backend/         # FastAPI backend (submodule)
+├── model/               # ML service (submodule)
+├── docs/                # Documentation (submodule)
+└── postgres/            # Database initialization
 ```
 
-## Table of Contents
+## 🔗 Service Documentation
 
-- [Prerequisites](#prerequisites)
-- [Running the Application](#running-the-application)
-- [Updating and Maintenance](#updating-and-maintenance)
-- [Troubleshooting](#troubleshooting)
+- [Frontend Documentation](./app/frontend/README.md)
+- [Backend Documentation](./app/backend/README.md)
+- [Model Service Documentation](./model/README.md)
+- [Project Requirements](./docs/Project-Requirements.md)
 
-## Prerequisites
+## 📊 Development Tools
 
-- [Docker](https://docs.docker.com/get-docker/) must be installed.
-- [Docker Compose](https://docs.docker.com/compose/install/) must be available.
+- **API Documentation**: Swagger UI at `/docs` for each FastAPI service
+- **Database Management**: pgAdmin at port 5050
+- **Logs**: `docker compose logs -f [service-name]`
+- **Health Checks**: `GET /health` endpoint on each service
 
-## Getting Started
+## 🤝 Contributing
 
-<!-- TODO -->
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+- Git workflow and branch strategy
+- Commit message conventions
+- Code review process
+- Testing requirements
 
-## Running the Application
+---
 
-To build and start all services, run:
-
-```bash
-docker compose up --build -d
-```
-
-This command will:
-- Build Docker images for **frontend**, **backend**, and **model**.
-- Pull the latest image for Supabase if unavailable.
-- Create and attach the necessary volumes for persistent data storage.
-
-## Updating and Maintenance
-
-- **Updating Services**:  
-  Update each submodule (frontend, backend, model) and rebuild using:
-  ```bash
-  docker compose pull
-  docker compose up --build -d
-  ```
-
-- **Restarting Services**:  
-  To apply configuration changes, run:
-  ```bash
-  docker compose down
-  docker compose up -d
-  ```
-
-<!-- - **Scaling**:   -->
-<!--   For horizontal scaling, adjust service definitions as needed. For example, to scale the backend: -->
-<!--   ```bash -->
-<!--   docker-compose up --scale backend=3 -d -->
-<!--   ``` -->
-
-## Troubleshooting
-
-- **Viewing Logs**:  
-  To view logs for a specific service:
-  ```bash
-  docker compose logs [service_name]
-  ```
-
-- **Checking Service Health**:  
-  Verify the status of all containers with:
-  ```bash
-  docker compose ps
-  ```
-
-- **Resetting Data**:  
-  To remove volumes and reset the environment:
-  ```bash
-  docker compose down -v
-  ```
+Built with ❤️ by **team/random_iceberg**
