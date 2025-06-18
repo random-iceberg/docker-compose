@@ -1,0 +1,10 @@
+# Overrides to use images from the registry
+services:
+  frontend:
+    image: ${IMAGE_GROUP}/web-frontend:${IMAGE_TAG}
+
+  backend:
+    image: ${IMAGE_GROUP}/web-backend:${IMAGE_TAG}
+
+  model:
+    image: ${IMAGE_GROUP}/model-backend:${IMAGE_TAG}

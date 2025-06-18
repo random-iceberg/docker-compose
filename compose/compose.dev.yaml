@@ -1,0 +1,10 @@
+# Local development configuration
+
+name: random-iceberg-dev
+
+# Merge relevant configurations together
+include:
+  - path:
+      - ./config/common.yaml
+      - ./config/dev-modules.yaml
+      - ./config/dev-overrides.yaml

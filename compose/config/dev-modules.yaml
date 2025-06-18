@@ -1,0 +1,7 @@
+# Collect dev configurations of submodules together.
+# No merging here. No conflicts are supposed to arise.
+include:
+  - ../../app/frontend/compose.dev.yaml
+  - ../../app/backend/compose.dev.yaml
+  - ../../model/compose.dev.yaml
+

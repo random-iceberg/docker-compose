@@ -1,8 +1,117 @@
-# student-repo
- 
-This repository was created for you as part of a course project. You are required to use this project for any course work and contact 
-the lecturer in case you encounter any problems with the settings and configuration of the project.
+# Titanic Survivor Prediction Application
 
-Any code or related work done in other, self-created Gitlab projects is **not considered for grading**.
+A production-ready web application that predicts Titanic passenger survival using machine learning models. Built with React, FastAPI, and scikit-learn.
 
+![team/random_iceberg banner](./docs/random_iceberg.png)
 
+## 🚀 Quick Start (Zero Configuration)
+
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/docker-compose.git
+cd docker-compose
+
+# Start all services (production test)
+docker compose up --build -d
+
+# Access the application
+open http://localhost:8080
+```
+
+**That's it!** No environment setup, no dependencies to install, no configuration needed.
+
+## 🏗️ Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌──────────────┐
+│   Frontend  │────►│   Backend   │────►│ Model Service│
+│   (React)   │     │  (FastAPI)  │     │  (FastAPI)   │
+└─────────────┘     └──────┬──────┘     └──────────────┘
+   Port 8080               │               Port 8000
+                    ┌──────▼──────┐     ┌──────────────┐
+                    │  PostgreSQL │────►│   pgAdmin    │
+                    └─────────────┘     └──────────────┘
+                       Port 5432           Port 5050
+```
+
+## 📋 Features
+
+- **Survival Prediction**: Real-time predictions based on passenger attributes
+- **Model Management**: Train, evaluate, and delete ML models
+- **User Authentication**: JWT-based secure authentication
+- **Admin Console**: Model training and management interface
+- **Responsive Design**: Mobile-first, accessible UI
+- **Zero Config**: Works out of the box with Docker Compose
+
+## 🛠️ Development Workflow
+
+### Prerequisites
+- Docker & Docker Compose
+- Git with submodule support
+
+### Development Mode (with hot reload)
+
+```bash
+# Start development environment with code syncing
+docker compose -f 'compose/compose.dev.yaml' up -d --build
+
+# Access services:
+# - Frontend: http://localhost:8080
+# - Backend Swagger: http://localhost:8000/docs
+# - Model Swagger: http://localhost:8001/docs
+# - pgAdmin: http://localhost:5050
+#   - Email: team@random.iceberg
+#   - Password: Cheezus123
+```
+
+### Testing Production Build Locally
+
+```bash
+# Test production build
+docker compose -f 'compose/compose.prod-local.yaml' up -d
+
+# Main app: http://localhost:8080
+```
+
+## 📁 Project Structure
+
+```
+docker-compose/
+├── docker-compose.yaml   # Default (production) configuration
+├── compose/              # Compose configurations
+│   ├── compose.dev.yaml          # Development with hot reload
+│   ├── compose.prod-local.yaml   # Production from local build
+│   └── compose.prod-registry.yaml # Production from registry
+├── app/
+│   ├── frontend/        # React frontend (submodule)
+│   └── backend/         # FastAPI backend (submodule)
+├── model/               # ML service (submodule)
+├── docs/                # Documentation (submodule)
+└── postgres/            # Database initialization
+```
+
+## 🔗 Service Documentation
+
+- [Frontend Documentation](./app/frontend/README.md)
+- [Backend Documentation](./app/backend/README.md)
+- [Model Service Documentation](./model/README.md)
+- [Project Requirements](./docs/Project-Requirements.md)
+
+## 📊 Development Tools
+
+- **API Documentation**: Swagger UI at `/docs` for each FastAPI service
+- **Database Management**: pgAdmin at port 5050
+- **Logs**: `docker compose logs -f [service-name]`
+- **Health Checks**: `GET /health` endpoint on each service
+
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+- Git workflow and branch strategy
+- Commit message conventions
+- Code review process
+- Testing requirements
+
+---
+
+Built with ❤️ by **team/random_iceberg**

@@ -1,0 +1,67 @@
+# https://docs.gitlab.com/ci/yaml
+
+stages: # List of stages for jobs, and their order of execution
+  - default
+
+.check-health:
+  stage: default
+  resource_group: dind
+  image: docker:cli
+  services:
+    - docker:dind
+  before_script:
+    - test ! -z $cicdtoken
+    - git config --global url."https://gitlab-ci-token:${cicdtoken}@${CI_SERVER_HOST}/".insteadOf "https://${CI_SERVER_HOST}/"
+    - git submodule update --init --recursive app model
+  script:
+    # Try to build the images
+    - $COMPOSE build --pull
+    # Wait for health checks to pass
+    - $COMPOSE up --wait
+    # Ok
+    - $COMPOSE down
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+# Run health checks on that revision which is pinned in submodules
+check-health:
+  extends:
+    - .check-health
+  variables:
+    COMPOSE: docker compose -f ./compose/compose.prod-local.yaml
+  
+
+# Run health checks on that revision which is pinned in submodules
+check-health-dev:
+  extends:
+    - .check-health
+  variables:
+    COMPOSE: docker compose -f ./compose/compose.dev.yaml
+    
+
+# TODO: actually run e2e tests
+# Run e2e tests. Revision of each service container is the matching tag.
+e2e-tests:
+  stage: default
+  resource_group: dind
+  image: docker:cli
+  services:
+    - docker:dind
+  variables:
+    IMAGE_GROUP: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg
+    IMAGE_TAG: $CI_COMMIT_REF_SLUG
+    COMPOSE: docker compose -f ./compose/compose.prod-registry.yaml
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$cicdtoken" $CI_REGISTRY
+  script:
+    - $COMPOSE pull
+    - $COMPOSE up --wait
+    - $COMPOSE down
+
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      variables:
+        IMAGE_TAG: latest
+    - if: $CI_PIPELINE_SOURCE == "schedule"
