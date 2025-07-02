@@ -1,0 +1,10 @@
+# Disable port allocation in CI
+services:
+  frontend:
+    ports: !reset null
+  backend:
+    ports: !reset null
+  model:
+    ports: !reset null
+  pgadmin:
+    ports: !reset null
