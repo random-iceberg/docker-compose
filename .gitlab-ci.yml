@@ -13,13 +13,16 @@ stages: # List of stages for jobs, and their order of execution
     - test ! -z $cicdtoken
     - git config --global url."https://gitlab-ci-token:${cicdtoken}@${CI_SERVER_HOST}/".insteadOf "https://${CI_SERVER_HOST}/"
     - git submodule update --init --recursive app model
+    # Clean the environment (as the runner does not ensure proper isolation)
+    - sh scripts/down_all_v.sh
   script:
     # Try to build the images
     - $COMPOSE build --pull
     # Wait for health checks to pass
     - $COMPOSE up --wait
-    # Ok
-    - $COMPOSE down
+  after_script:
+    # Cleanup
+    - sh scripts/down_all_v.sh
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never
@@ -55,10 +58,14 @@ e2e-tests:
     COMPOSE: docker compose -f ./compose/compose.prod-registry.yaml -f ./compose/config/ci-overrides.yaml
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$cicdtoken" $CI_REGISTRY
+    # Clean the environment (as the runner does not ensure proper isolation)
+    - sh scripts/down_all_v.sh
   script:
     - $COMPOSE pull
     - $COMPOSE up --wait
-    - $COMPOSE down
+  after_script:
+    # Cleanup
+    - sh scripts/down_all_v.sh
 
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
