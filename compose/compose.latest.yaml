@@ -1,0 +1,10 @@
+# Production configuration
+
+name: random-iceberg-latest
+
+# Merge relevant configurations together
+include:
+  - path:
+      - ./config/common.yaml
+      - ./config/prod-common.yaml
+      - ./config/latest-overrides.yaml

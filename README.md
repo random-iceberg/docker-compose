@@ -1,5 +1,39 @@
 # Titanic Survivor Prediction Application
 
+## !!! Submission notes !!!
+
+#### Predefined users (new non-admins can be registered):
+- **admin:** `email="admin@test"`, `password="apass"`
+- **common:** `email="user@test"`, `password="upass"`
+
+#### Run images from the registry
+
+```bash
+# 1. Checkout the latest 'main' commit (docker-compose only)
+# 2. Make sure to `docker login` into `registry.mygit.th-deg.de`
+# 2. Start
+docker compose -f compose/compose.latest.yaml up --pull always -d
+# 3. Access on http://localhost:8080
+# ...
+docker compose -f compose/compose.latest.yaml down
+```
+
+#### Build locally
+
+```bash
+# 1. Checkout the latest 'main' commits (docker-compose and all the submodules)
+# 2. Start
+docker compose up --build --pull always -d
+# 3. Access on http://localhost:8080
+# ...
+docker compose down
+```
+
+#### Notes
+- pgAdmin, mentioned below, will not start without `--profile=pgadmin`
+
+## Description
+
 A production-ready web application that predicts Titanic passenger survival using machine learning models. Built with React, FastAPI, and scikit-learn.
 
 ![team/random_iceberg banner](./docs/random_iceberg.png)
