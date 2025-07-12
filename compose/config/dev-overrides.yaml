@@ -7,6 +7,8 @@ services:
     ports:
       - "8001:8000"
   pgadmin:
+    ports:
+      - "5050:80"
     environment:
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
