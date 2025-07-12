@@ -14,6 +14,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+      start_interval: 1s
 
   # Backend service (FastAPI)
   backend:
@@ -33,6 +34,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+      start_interval: 1s
 
   # Model service (FastAPI)
   model:
@@ -50,6 +52,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+      start_interval: 1s
 
   # Database container (Postgres)
   postgres:
@@ -68,6 +71,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+      start_interval: 1s
 
   # Database GUI (pgAdmin)
   pgadmin:
@@ -84,6 +88,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    profiles:
+      - pgadmin
     # healthcheck:
     #     test: ["CMD-SHELL", "curl -sf http://localhost/"] # curl is not available
     #     interval: 30s

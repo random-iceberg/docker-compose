@@ -1,0 +1,10 @@
+# Overrides to use images from the registry
+services:
+  frontend:
+    image: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg/web-frontend:latest
+
+  backend:
+    image: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg/web-backend:latest
+
+  model:
+    image: registry.mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/random_iceberg/model-backend:latest
