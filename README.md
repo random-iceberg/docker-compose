@@ -1,24 +1,23 @@
-# Titanic Survivor Prediction Application
+# !!! Submission notes !!!
 
-## !!! Submission notes !!!
-
-#### Predefined users (new non-admins can be registered):
+### Predefined users (new non-admins can be registered):
 - **admin:** `email="admin@test"`, `password="apass"`
-- **common:** `email="user@test"`, `password="upass"`
+- **non-admin:** `email="user@test"`, `password="upass"`
 
-#### Run images from the registry
+### Run images from the registry
 
 ```bash
-# 1. Checkout the latest 'main' commit (docker-compose only)
+# 1. Checkout the latest 'main' commit (docker-compose repo alone is enough)
 # 2. Make sure to `docker login` into `registry.mygit.th-deg.de`
-# 2. Start
+# 3. Start
 docker compose -f compose/compose.latest.yaml up --pull always -d
-# 3. Access on http://localhost:8080
+# 4. Access on http://localhost:8080
+# 5. Do your shady business
 # ...
 docker compose -f compose/compose.latest.yaml down
 ```
 
-#### Build locally
+### Build locally
 
 ```bash
 # 1. Checkout the latest 'main' commits (docker-compose and all the submodules)
@@ -29,8 +28,23 @@ docker compose up --build --pull always -d
 docker compose down
 ```
 
-#### Notes
-- pgAdmin, mentioned below, will not start without `--profile=pgadmin`
+### Notes on execution
+- The services wait for each other to start, so the start can take a little time.
+  - 30-40 seconds, +another few on a completely clean start (due to models training).
+    - (computer-subjective time)
+- The two above mentioned compose configs are both defined with `random-iceberg` project name.
+  - So to share the volumes.
+
+### Notes on functional requirements
+- There is, intentionally, no delete option for the **default** models
+  - All admin-user-trained models can still be deleted.
+- Remidner: the advertisement is at the end of the landing page.
+
+### Side notes
+
+- pgAdmin, that is not required to run everything and that is mentioned below, will not start unless `--profile=pgadmin` is set
+
+# Titanic Survivor Prediction Application
 
 ## Description
 
@@ -62,7 +76,7 @@ open http://localhost:8080
 │   (React)   │     │  (FastAPI)  │     │  (FastAPI)   │
 └─────────────┘     └──────┬──────┘     └──────────────┘
    Port 8080               │               Port 8000
-                    ┌──────▼──────┐     ┌──────────────┐
+   (exposed)        ┌──────▼──────┐     ┌──────────────┐
                     │  PostgreSQL │────►│   pgAdmin    │
                     └─────────────┘     └──────────────┘
                        Port 5432           Port 5050

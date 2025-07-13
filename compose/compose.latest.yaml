@@ -1,6 +1,6 @@
 # Production configuration
 
-name: random-iceberg-latest
+name: random-iceberg
 
 # Merge relevant configurations together
 include:
