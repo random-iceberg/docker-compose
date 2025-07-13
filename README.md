@@ -10,7 +10,7 @@
 # 1. Checkout the latest 'main' commit (docker-compose repo alone is enough)
 # 2. Make sure to `docker login` into `registry.mygit.th-deg.de`
 # 3. Start
-docker compose -f compose/compose.latest.yaml up --pull always -d
+docker compose -f compose/compose.latest.yaml up --build --pull always -d
 # 4. Access on http://localhost:8080
 # 5. Do your shady business
 # ...
@@ -34,6 +34,8 @@ docker compose down
     - (computer-subjective time)
 - The two above mentioned compose configs are both defined with `random-iceberg` project name.
   - So to share the volumes.
+- In case of the "latest" config, there still will be some building.
+  - It is related to the database container.
 
 ### Notes on functional requirements
 - There is, intentionally, no delete option for the **default** models
