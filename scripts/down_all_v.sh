@@ -1,18 +1,16 @@
-set -xe
+#!/usr/bin/env sh
+set -eu
 
-docker compose ls
+docker compose ls 2>/dev/null || true
 
-function running_icebergs {
-    docker compose ls | (grep ^random-iceberg || test $? = 1)
+running_icebergs() {
+    docker compose ls | awk '$1 ~ /^random-iceberg/ { print }'
 }
 
-running_icebergs
-
-function their_config {
-    running_icebergs | awk '{print $3}' | sed 's/^/-f /' | sed 's/,/ -f /g'
+their_config() {
+    running_icebergs | awk '{print $3}' | sed -e 's/^/-f /' -e 's/,/ -f /g'
 }
 
-their_config
-
-their_config | xargs -i sh -c 'docker compose {} down -v --remove-orphans'
-
+if [ -n "$(running_icebergs)" ]; then
+    their_config | xargs -r -I{} sh -c "docker compose {} down -v --remove-orphans"
+fi
