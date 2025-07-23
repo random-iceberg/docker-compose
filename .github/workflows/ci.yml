@@ -12,6 +12,7 @@ on:
 permissions:
   contents: read
   packages: write
+  statuses: write
 
 env:
   REGISTRY: ghcr.io
