@@ -1,6 +1,6 @@
 <h1 align="center">
 
-  <img src="https://github.com/user-attachments/assets/ff38240d-da2f-4241-a65b-a76929831505" alt="Titanic Survivor Prediction Banner" width="600"/>
+  <img src="https://github.com/user-attachments/assets/9a889962-2d09-46e7-b9ac-c16c856554e9" alt="Titanic Survivor Prediction Banner" width="600"/>
 </h1>
 
 <p align="center">
