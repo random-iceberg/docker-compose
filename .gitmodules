@@ -1,12 +1,12 @@
 [submodule "model"]
 	path = model
-	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/model-backend.git
+	url = https://github.com/random-iceberg/model-backend.git
 [submodule "docs"]
 	path = docs
-	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/docker-compose.wiki.git
+	url = https://github.com/random-iceberg/docker-compose.wiki.git
 [submodule "app/backend"]
 	path = app/backend
-	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/web-backend.git
+	url = https://github.com/random-iceberg/web-backend.git
 [submodule "app/frontend"]
 	path = app/frontend
-	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/Random_Iceberg/web-frontend.git
+	url = https://github.com/random-iceberg/web-frontend.git
