@@ -1,4 +1,4 @@
-# Overrides to use images from the registry
+# Overrides to use images from GitHub Container Registry with configurable tags
 services:
   frontend:
     image: ${IMAGE_GROUP}/web-frontend:${IMAGE_TAG}
