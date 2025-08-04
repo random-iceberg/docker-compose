@@ -1,10 +1,13 @@
 # Overrides to use images from GitHub Container Registry
 services:
   frontend:
+    platform: linux/amd64
     image: ghcr.io/random-iceberg/web-frontend:latest
 
   backend:
+    platform: linux/amd64
     image: ghcr.io/random-iceberg/web-backend:latest
 
   model:
+    platform: linux/amd64
     image: ghcr.io/random-iceberg/model-backend:latest
