@@ -1,13 +1,13 @@
 # Overrides to use images from GitHub Container Registry with configurable tags
 services:
   frontend:
-    # platform: linux/amd64
+    platform: linux/amd64
     image: ${IMAGE_GROUP:-ghcr.io/random-iceberg}/web-frontend:${IMAGE_TAG:-latest}
 
   backend:
-    # platform: linux/amd64
+    platform: linux/amd64
     image: ${IMAGE_GROUP:-ghcr.io/random-iceberg}/web-backend:${IMAGE_TAG:-latest}
 
   model:
-    # platform: linux/amd64
+    platform: linux/amd64
     image: ${IMAGE_GROUP:-ghcr.io/random-iceberg}/model-backend:${IMAGE_TAG:-latest}
