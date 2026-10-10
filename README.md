@@ -1,7 +1,6 @@
-<h1 align="center">
-
-  <img src="https://github.com/user-attachments/assets/9a889962-2d09-46e7-b9ac-c16c856554e9" alt="Titanic Survivor Prediction Banner" width="600"/>
-</h1>
+<p align="center">
+  <img src=".github/banner.png" alt="Random Iceberg – a hand-drawn banner: a man at a ship's railing pointing at a smiling iceberg" width="100%">
+</p>
 
 <p align="center">
   <strong>A production-ready web application that predicts Titanic passenger survival using machine learning models</strong>
